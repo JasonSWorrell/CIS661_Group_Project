@@ -27,6 +27,12 @@
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I"
                 FontSize="18"
                 HorizontalOptions="Center" />
+            <Label
+                Text="This was a test"
+                SemanticProperties.HeadingLevel="Level3"
+                SemanticProperties.Description="This is just a test."
+                FontSize="11"
+                HorizontalOptions="Center"/>
 
             <Button
                 x:Name="CounterBtn"
