@@ -12,7 +12,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>Frontend</ApplicationTitle>
+		<ApplicationTitle>Ares</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.frontend</ApplicationId>

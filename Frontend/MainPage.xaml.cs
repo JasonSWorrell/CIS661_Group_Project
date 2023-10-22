@@ -2,23 +2,34 @@
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
         public MainPage()
         {
             InitializeComponent();
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
-        {
-            count++;
+        #region //MENU
+        // File Commands
+        private void OpenCommand(object sender, EventArgs e) { }
+        private void ExitCommand(object sender, EventArgs e) { }
+        private void SaveCommand(object sender, EventArgs e) { }
+        private void EditCommand(object sender, EventArgs e) { }
+        // Appearance Editors
+        private void DarkMode(object sender, EventArgs e) { }
+        private void LightMode(object sender, EventArgs e) { }  
+        // Debug Controls
+        private void RunCommand(object sender, EventArgs e) { } 
+        private void DebugCommand(object sender, EventArgs e) { }
+        #endregion
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
+        #region //Text
+        //Text Fillers
+        private void OnEditorTextChanged(object sender, EventArgs e) { }
+        private void OnEditorCompleted(object sender, EventArgs e) { }
+        #endregion
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
-        }
+        #region //Action
+
+        #endregion
+
     }
 }

@@ -3,45 +3,448 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Frontend.MainPage">
 
+    <ContentPage.MenuBarItems>
+        <MenuBarItem Text="File">
+            
+            <MenuFlyoutItem Text="Open"
+                            Command="{Binding OpenCommand}" />
+            <MenuFlyoutItem Text="Save"
+                            Command="{Binding SaveCommand}" />
+            <MenuFlyoutItem Text="Exit"
+                            Command="{Binding ExitCommand}" />
+        </MenuBarItem>
+        <MenuBarItem Text="Edit">
+            <MenuFlyoutItem Text="Edit"
+                            Command="{Binding EditCommand}"/>
+        </MenuBarItem>
+        <MenuBarItem Text="Settings">
+            <MenuFlyoutSubItem Text="Display Modes">
+                <MenuFlyoutItem Text="DarkMode"
+                                Command="{Binding DarkModeCommand}"/>
+                <MenuFlyoutItem Text="LightMode"
+                                Command="{Binding LightModeCommand}" />
+            </MenuFlyoutSubItem>
+        </MenuBarItem>
+           
+        <MenuBarItem Text="Program">
+            <MenuFlyoutItem Text="Run"
+                            Command="{Binding RunCommand}" />
+            <MenuFlyoutItem Text="Debug"
+                            Command="{Binding DebugCommand}" />
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Import Program"
+                 IconImageSource="add.png" />
+    </ContentPage.ToolbarItems>
+
     <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
-
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-            <Label
-                Text="This was a test"
-                SemanticProperties.HeadingLevel="Level3"
-                SemanticProperties.Description="This is just a test."
-                FontSize="11"
-                HorizontalOptions="Center"/>
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
-        </VerticalStackLayout>
+        <FlexLayout Direction="Row"
+            AlignItems="Start"
+            JustifyContent="Start">
+            <VerticalStackLayout
+                    Spacing="1"
+                    Padding="10"
+                    HorizontalOptions="StartAndExpand"
+                    VerticalOptions="StartAndExpand">
+                <Label FontSize="22">Program</Label>
+                <Editor x:Name="Program"
+                        MinimumWidthRequest="150"
+                        MinimumHeightRequest="500"
+                        TextChanged="OnEditorTextChanged"
+                        Completed="OnEditorCompleted" />
+            </VerticalStackLayout>
+            <VerticalStackLayout
+                    Spacing="1"
+                    Padding="10"
+                    HorizontalOptions="StartAndExpand"
+                    VerticalOptions="StartAndExpand">
+                <Label FontSize="22">Binary Translation</Label>
+                <Editor x:Name="BinaryTranslation"
+                        MinimumWidthRequest="150"
+                        MinimumHeightRequest="500"
+                        TextChanged="OnEditorTextChanged"
+                        Completed="OnEditorCompleted" />
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Label 
+                    FontSize="22"
+                    >
+                    REGISTER BANK
+                </Label>
+                <FlexLayout>
+                    <VerticalStackLayout
+                        Spacing="1"
+                        Padding="1"
+                        HorizontalOptions="StartAndExpand"
+                        VerticalOptions="StartAndExpand"
+                        MinimumWidthRequest="155">
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>Name</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>zero</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>sp</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>t0</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>t1</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>t2</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>t3</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>s0</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>s1</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>s2</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>s3</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>v</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>a0</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>a1</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>a2</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>ra</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>ker</Label>
+                        </Border>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout
+            Spacing="1"
+            Padding="1"
+            HorizontalOptions="StartAndExpand"
+            VerticalOptions="StartAndExpand"
+                        MinimumWidthRequest="155">
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>Binary</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0000</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0001</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0010</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0011</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0100</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0101</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0110</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0111</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>1000</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>1001</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>1010</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>1011</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>1100</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>1101</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>1110</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>1111</Label>
+                        </Border>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout
+                        Spacing="1"
+                        Padding="1"
+                        HorizontalOptions="StartAndExpand"
+                        VerticalOptions="StartAndExpand"
+                        MinimumWidthRequest="155">
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>Number</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>1</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>2</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>3</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>4</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>5</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>6</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>7</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>8</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>9</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>10</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>11</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>12</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>13</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>14</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>15</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">    
+                            <Label>16</Label>
+                        </Border>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout
+                        Spacing="1"
+                        Padding="1"
+                        HorizontalOptions="StartAndExpand"
+                        VerticalOptions="StartAndExpand"
+                        MinimumWidthRequest="155">
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>Value</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0000 0000 0000</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0000 0000 0000</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0x0000</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0x0000</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0x0000</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0x0000</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0x0000</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0x0000</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0xFFFF</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0xFFFF</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0xFFFF</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0xFFFF</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0xFFFF</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0xFFFF</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0xFFFF</Label>
+                        </Border>
+                        <Border Stroke="#000000"
+                            StrokeThickness="1"
+                            Padding="1">
+                            <Label>0xFFFF</Label>
+                        </Border>
+                    </VerticalStackLayout>
+                </FlexLayout>
+            </VerticalStackLayout>
+        </FlexLayout>
+        
     </ScrollView>
 
 </ContentPage>
