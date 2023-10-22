@@ -31,22 +31,22 @@ string Return_Address_Register = "0000";
 string Kernel_Register = "0000";
 */
 
-string szero = "0100";
-string ssp = "0000";
-string st0 = "0000";
-string st1 = "0000";
-string st2 = "0000";
-string st3 = "0000";
-string ss0 = "0000";
-string ss1 = "0000";
-string ss2 = "0000";
-string ss3 = "0000";
-string sv = "0000";
-string sa0 = "0000";
-string sa1 = "0000";
-string sa2 = "0000";
-string sra = "0000";
-string sk = "0000";
+string szero = "0000000000000100";
+string ssp   = "0000000000000000";
+string st0   = "0000000000000000";
+string st1   = "0000000000000000";
+string st2   = "0000000000000000";
+string st3   = "0000000000000000";
+string ss0   = "0000000000000000";
+string ss1   = "0000000000000000";
+string ss2   = "0000000000000000";
+string ss3   = "0000000000000000";
+string sv    = "0000000000000000";
+string sa0   = "0000000000000000";
+string sa1   = "0000000000000000";
+string sa2   = "0000000000000000";
+string sra   = "0000000000000000";
+string sk    = "0000000000000000";
 //
 
 
@@ -117,6 +117,13 @@ int Get_The_Int_Value_Of_Register_X(string Register_String)
     {
         return_value = Convert.ToInt32(sk, 2);
     }
+
+    return return_value;
+}
+
+string Get_The_Binary_String_Value_Of_A_Register_Numer(int Register_int)
+{
+    string return_value = "-69";
 
     return return_value;
 }
