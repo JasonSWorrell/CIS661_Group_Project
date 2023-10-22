@@ -13,23 +13,25 @@ int itemp1 = 0;
 int itemp2 = 0;
 int itemp3 = 0;
 
+string[] stack;
+
 // Saved Register Variables
 string szero = "0000000000000000";
-string ssp   = "0000000000000000";
-string st0   = "0000000000000001";
-string st1   = "0000000000000000";
-string st2   = "0000000000000000";
-string st3   = "0000000000000000";
-string ss0   = "0000000000000000";
-string ss1   = "0000000000000100";
-string ss2   = "0000000000000000";
-string ss3   = "0000000000000000";
-string sv    = "0000000000000000";
-string sa0   = "0000000000000000";
-string sa1   = "0000000000000000";
-string sa2   = "0000000000000000";
-string sra   = "0000000000000000";
-string sk    = "0000000000000000";
+string ssp = "0000000000000000";
+string st0 = "0000000000000001";
+string st1 = "0000000000000000";
+string st2 = "0000000000000000";
+string st3 = "0000000000000000";
+string ss0 = "0000000000000000";
+string ss1 = "0000000000000100";
+string ss2 = "0000000000000000";
+string ss3 = "0000000000000000";
+string sv = "0000000000000000";
+string sa0 = "0000000000000000";
+string sa1 = "0000000000000000";
+string sa2 = "0000000000000000";
+string sra = "0000000000000000";
+string sk = "0000000000000000";
 //
 
 string Input_String = "add a0 t0 s1";
@@ -194,6 +196,21 @@ void Store_Binary_String_Value_Into_A_Register_String_Variable(string Register, 
 
 }
 
+void Push_To_Stack(int value)   // Pushes a Value to the Stack and Then Increments the Stack Pointer
+{
+    string binary_value = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(value);
+    int stack_pointer = Get_The_Int_Value_Of_Register_X(ssp);
+    stack[stack_pointer] = binary_value;
+    stack_pointer++;
+    string binary_stack_pointer = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(stack_pointer);
+    ssp = binary_stack_pointer;
+}
+
+int Pull_From_Stack(int index)
+{
+
+}
+
 void Perform_The_Op_Code(string[] Parsed_Input_Strin)
 {
     if (Parsed_Input_String[0].Equals("add"))
@@ -233,7 +250,7 @@ void Perform_The_Op_Code(string[] Parsed_Input_Strin)
         // Pull int values to add
         itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[2]);
         itemp2 = int.Parse(Parsed_Input_String[3]);
-        
+
         // Do Subtraction
         itemp3 = itemp1 + itemp2;
 
@@ -314,5 +331,3 @@ foreach (var word in Parsed_Input_String)
     
 }
 */
-
-
