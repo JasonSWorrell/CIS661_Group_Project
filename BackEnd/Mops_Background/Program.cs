@@ -3,6 +3,8 @@
 // input string then parse it into parsed input strings
 // take parsed input string and change the register binarys to the output binarys
 
+using System.Data.SqlTypes;
+
 string stemp1 = "";
 string stemp2 = "";
 string stemp3 = "";
@@ -207,8 +209,40 @@ void Perform_The_Op_Code(string[] Parsed_Input_Strin)
         stemp1 = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itemp3);
         Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_Input_String[1], stemp1);
 
+        // Debug Output
         Console.WriteLine(sa0);
-        //Console.WriteLine("op code add");
+    }
+    else if (Parsed_Input_String[0].Equals("sub"))
+    {
+        // Pull int values to add
+        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[2]);
+        itemp2 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[3]);
+
+        // Do Subtraction
+        itemp3 = itemp1 - itemp2;
+
+        // Store Value into Register
+        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itemp3);
+        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_Input_String[1], stemp1);
+
+        // Debug Output
+        Console.WriteLine(sa0);
+    }
+    else if (Parsed_Input_String[0].Equals("addi"))
+    {
+        // Pull int values to add
+        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[2]);
+        itemp2 = int.Parse(Parsed_Input_String[3]);
+        
+        // Do Subtraction
+        itemp3 = itemp1 + itemp2;
+
+        // Store Value into Register
+        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itemp3);
+        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_Input_String[1], stemp1);
+
+        // Debug Output
+        Console.WriteLine(sa0);
     }
 }
 
