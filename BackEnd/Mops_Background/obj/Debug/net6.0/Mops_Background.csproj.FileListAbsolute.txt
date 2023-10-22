@@ -1,0 +1,15 @@
+C:\Users\tpesp\OneDrive\Documents\Masters\Classes\Fall_2023\CSE_661__CIS_655_Advanced_Computer_Architecture\HW\HW_2\Mops_Background\bin\Debug\net6.0\Mops_Background.exe
+C:\Users\tpesp\OneDrive\Documents\Masters\Classes\Fall_2023\CSE_661__CIS_655_Advanced_Computer_Architecture\HW\HW_2\Mops_Background\bin\Debug\net6.0\Mops_Background.deps.json
+C:\Users\tpesp\OneDrive\Documents\Masters\Classes\Fall_2023\CSE_661__CIS_655_Advanced_Computer_Architecture\HW\HW_2\Mops_Background\bin\Debug\net6.0\Mops_Background.runtimeconfig.json
+C:\Users\tpesp\OneDrive\Documents\Masters\Classes\Fall_2023\CSE_661__CIS_655_Advanced_Computer_Architecture\HW\HW_2\Mops_Background\bin\Debug\net6.0\Mops_Background.dll
+C:\Users\tpesp\OneDrive\Documents\Masters\Classes\Fall_2023\CSE_661__CIS_655_Advanced_Computer_Architecture\HW\HW_2\Mops_Background\bin\Debug\net6.0\Mops_Background.pdb
+C:\Users\tpesp\OneDrive\Documents\Masters\Classes\Fall_2023\CSE_661__CIS_655_Advanced_Computer_Architecture\HW\HW_2\Mops_Background\obj\Debug\net6.0\Mops_Background.csproj.AssemblyReference.cache
+C:\Users\tpesp\OneDrive\Documents\Masters\Classes\Fall_2023\CSE_661__CIS_655_Advanced_Computer_Architecture\HW\HW_2\Mops_Background\obj\Debug\net6.0\Mops_Background.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tpesp\OneDrive\Documents\Masters\Classes\Fall_2023\CSE_661__CIS_655_Advanced_Computer_Architecture\HW\HW_2\Mops_Background\obj\Debug\net6.0\Mops_Background.AssemblyInfoInputs.cache
+C:\Users\tpesp\OneDrive\Documents\Masters\Classes\Fall_2023\CSE_661__CIS_655_Advanced_Computer_Architecture\HW\HW_2\Mops_Background\obj\Debug\net6.0\Mops_Background.AssemblyInfo.cs
+C:\Users\tpesp\OneDrive\Documents\Masters\Classes\Fall_2023\CSE_661__CIS_655_Advanced_Computer_Architecture\HW\HW_2\Mops_Background\obj\Debug\net6.0\Mops_Background.csproj.CoreCompileInputs.cache
+C:\Users\tpesp\OneDrive\Documents\Masters\Classes\Fall_2023\CSE_661__CIS_655_Advanced_Computer_Architecture\HW\HW_2\Mops_Background\obj\Debug\net6.0\Mops_Background.dll
+C:\Users\tpesp\OneDrive\Documents\Masters\Classes\Fall_2023\CSE_661__CIS_655_Advanced_Computer_Architecture\HW\HW_2\Mops_Background\obj\Debug\net6.0\refint\Mops_Background.dll
+C:\Users\tpesp\OneDrive\Documents\Masters\Classes\Fall_2023\CSE_661__CIS_655_Advanced_Computer_Architecture\HW\HW_2\Mops_Background\obj\Debug\net6.0\Mops_Background.pdb
+C:\Users\tpesp\OneDrive\Documents\Masters\Classes\Fall_2023\CSE_661__CIS_655_Advanced_Computer_Architecture\HW\HW_2\Mops_Background\obj\Debug\net6.0\Mops_Background.genruntimeconfig.cache
+C:\Users\tpesp\OneDrive\Documents\Masters\Classes\Fall_2023\CSE_661__CIS_655_Advanced_Computer_Architecture\HW\HW_2\Mops_Background\obj\Debug\net6.0\ref\Mops_Background.dll
