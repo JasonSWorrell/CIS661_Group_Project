@@ -3,6 +3,12 @@
 // input string then parse it into parsed input strings
 // take parsed input string and change the register binarys to the output binarys
 
+// I tried to find a way to just leave a comment on this, but commenting was the only way I could find quickly. I'll do better next time.
+// Anyway... This is a really good start, We would need to create this into at least one class though and the class variables should have public and or private types.
+// Ex. private string stemp1;
+//     public string Stemp1 {get;} // set intentionally left out for the public class variable in this case.
+// I would suggest doing both because we can control more about how the code in interacted in the GUI that way. It is possible to accidently alter the output. 
+
 using System.Data.SqlTypes;
 
 string stemp1 = "";
