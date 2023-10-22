@@ -2,47 +2,24 @@
 
 // input string then parse it into parsed input strings
 // take parsed input string and change the register binarys to the output binarys
-//Console.WriteLine("Hello, World!");
 
-string Input_String = "add a0 t0 s1";
-string[] Parsed_Input_String = Input_String.Split(' ');
+string stemp1 = "";
+string stemp2 = "";
+string stemp3 = "";
 
-string stest1 = "zero";
-string stest2 = "";
-string stest3 = "";
+int itemp1 = 0;
+int itemp2 = 0;
+int itemp3 = 0;
 
-int itest1 = 0;
-int itest2 = 0;
-int itest3 = 0;
-
-// Register Variables
-/*
-string Zero_Register = "0000";
-string Stack_Pointer_Register = "0000";
-string Temp_1_Register = "0000";
-string Temp_2_Register = "0000";
-string Temp_3_Register = "0000";
-string Temp_4_Register = "0000";
-string Saved_Values_1_Register = "0000";
-string Saved_Values_2_Register = "0000";
-string Saved_Values_3_Register = "0000";
-string Saved_Values_4_Register = "0000";
-string Return_Values_Register = "0000";
-string Arguments_1_Register = "0000";
-string Arguments_2_Register = "0000";
-string Arguments_3_Register = "0000";
-string Return_Address_Register = "0000";
-string Kernel_Register = "0000";
-*/
-
-string szero = "0000000000000100";
+// Saved Register Variables
+string szero = "0000000000000000";
 string ssp   = "0000000000000000";
-string st0   = "0000000000000000";
+string st0   = "0000000000000001";
 string st1   = "0000000000000000";
 string st2   = "0000000000000000";
 string st3   = "0000000000000000";
 string ss0   = "0000000000000000";
-string ss1   = "0000000000000000";
+string ss1   = "0000000000000100";
 string ss2   = "0000000000000000";
 string ss3   = "0000000000000000";
 string sv    = "0000000000000000";
@@ -53,6 +30,8 @@ string sra   = "0000000000000000";
 string sk    = "0000000000000000";
 //
 
+string Input_String = "add a0 t0 s1";
+string[] Parsed_Input_String = Input_String.Split(' ');
 
 int Get_The_Int_Value_Of_Register_X(string Register_String)
 {
@@ -143,18 +122,154 @@ string Get_The_Binary_String_Value_Of_An_Int_Register_Numer(int Register_int)
     return return_value;
 }
 
-//int i = int.Parse(szero);
-//it0 = Convert.ToInt32(szero, 2);
+void Store_Binary_String_Value_Into_A_Register_String_Variable(string Register, string Value)
+{
+
+    if (Register.Equals("zero") || Register.Equals("0"))
+    {
+        szero = Value;
+    }
+    else if (Register.Equals("sp"))
+    {
+        ssp = Value;
+    }
+    else if (Register.Equals("t0"))
+    {
+        st0 = Value;
+    }
+    else if (Register.Equals("t1"))
+    {
+        st1 = Value;
+    }
+    else if (Register.Equals("t2"))
+    {
+        st2 = Value;
+    }
+    else if (Register.Equals("t3"))
+    {
+        st3 = Value;
+    }
+    else if (Register.Equals("s0"))
+    {
+        ss0 = Value;
+    }
+    else if (Register.Equals("s1"))
+    {
+        ss1 = Value;
+    }
+    else if (Register.Equals("s2"))
+    {
+        ss2 = Value;
+    }
+    else if (Register.Equals("s3"))
+    {
+        ss3 = Value;
+    }
+    else if (Register.Equals("v"))
+    {
+        sv = Value;
+    }
+    else if (Register.Equals("a0"))
+    {
+        sa0 = Value;
+    }
+    else if (Register.Equals("a1"))
+    {
+        sa1 = Value;
+    }
+    else if (Register.Equals("a2"))
+    {
+        sa2 = Value;
+    }
+    else if (Register.Equals("ra"))
+    {
+        sra = Value;
+    }
+    else if (Register.Equals("k"))
+    {
+        sk = Value;
+    }
+
+}
+
+void Perform_The_Op_Code(string[] Parsed_Input_Strin)
+{
+    if (Parsed_Input_String[0].Equals("add"))
+    {
+        // Pull int values to add
+        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[2]);
+        itemp2 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[3]);
+
+        // Do Addition
+        itemp3 = itemp1 + itemp2;
+
+        // Store Value into Register
+        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itemp3);
+        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_Input_String[1], stemp1);
+
+        Console.WriteLine(sa0);
+        //Console.WriteLine("op code add");
+    }
+}
+
+
+//######################################
+//Start Main Processing
+//######################################
+
+Perform_The_Op_Code(Parsed_Input_String);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 Console.WriteLine(stest1);
 itest1 = Get_The_Int_Value_Of_Register_X(stest1);
 Console.WriteLine(itest1);
 string sTest = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itest1);
 Console.WriteLine(sTest);
+*/
 
+
+/*
 if (Parsed_Input_String[0].Equals("add"))
 {
+    // Pull int values to add
+    itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[2]);
+    itemp2 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[3]);
 
-    Console.WriteLine("Zero Register");
+    // Do Addition
+    itemp3 = itemp1 + itemp2;
+
+    // Store Value into Register
+    stemp1 = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itemp3);
+    Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_Input_String[1], stemp1);
+
+    Console.WriteLine(sa0);
+    //Console.WriteLine("op code add");
 }
 
 //string[] words = Input_String.Split(' ');
