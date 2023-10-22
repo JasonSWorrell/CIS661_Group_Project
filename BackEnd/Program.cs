@@ -7,9 +7,13 @@
 string Input_String = "add a0 t0 s1";
 string[] Parsed_Input_String = Input_String.Split(' ');
 
-int it0 = 0;
-int it1 = 0;
-int it2 = 0;
+string stest1 = "zero";
+string stest2 = "";
+string stest3 = "";
+
+int itest1 = 0;
+int itest2 = 0;
+int itest3 = 0;
 
 // Register Variables
 /*
@@ -121,16 +125,31 @@ int Get_The_Int_Value_Of_Register_X(string Register_String)
     return return_value;
 }
 
-string Get_The_Binary_String_Value_Of_A_Register_Numer(int Register_int)
+string Get_The_Binary_String_Value_Of_An_Int_Register_Numer(int Register_int)
 {
+    string sbinary = Convert.ToString(Register_int, 2);
+    int ibinary = int.Parse(sbinary);
     string return_value = "-69";
+
+    string s = "{0:";
+    for (int i = 0; i < 16; i++)
+    {
+        s += "0";
+    }
+    s += "}";
+
+    return_value = string.Format(s, ibinary);
 
     return return_value;
 }
 
 //int i = int.Parse(szero);
-it0 = Convert.ToInt32(szero, 2);
-Console.WriteLine(it0);
+//it0 = Convert.ToInt32(szero, 2);
+Console.WriteLine(stest1);
+itest1 = Get_The_Int_Value_Of_Register_X(stest1);
+Console.WriteLine(itest1);
+string sTest = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itest1);
+Console.WriteLine(sTest);
 
 if (Parsed_Input_String[0].Equals("add"))
 {
@@ -148,5 +167,3 @@ foreach (var word in Parsed_Input_String)
 */
 
 
-// THIS IS A TEST THIS IS A TEST THIS IS A TEST THIS IS A TEST RUN FOR COVER
-// THIS IS A TEST PART 2
