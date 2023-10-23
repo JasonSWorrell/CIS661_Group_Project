@@ -445,6 +445,7 @@
             codeBox.Size = new Size(507, 410);
             codeBox.TabIndex = 26;
             codeBox.Text = "add $t0 $t1 $t2\nsub $s0 $s1 $s2\nslt a0,a1,a2\nisEqual t3, s3, zero\nstorew $zero, $zero, $zero\n\n\n";
+            codeBox.TextChanged += codeBox_TextChanged;
             // 
             // panel3
             // 

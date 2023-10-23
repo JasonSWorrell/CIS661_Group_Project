@@ -76,12 +76,15 @@ namespace LISCViewer
                     int r1 = binaryInstruction[2];
                     int r2 = binaryInstruction[3];
 
-                    //Binary Display translation of instructions
+
                     binaryDisplayCode.Text += Convert.ToString(op, 2).PadLeft(4, '0') + " ";
                     binaryDisplayCode.Text += Convert.ToString(dest, 2).PadLeft(4, '0') + " ";
                     binaryDisplayCode.Text += Convert.ToString(r1, 2).PadLeft(4, '0') + " ";
                     binaryDisplayCode.Text += Convert.ToString(r2, 2).PadLeft(4, '0') + " ";
                     binaryDisplayCode.Text += "\n";
+
+                    // Pass formatted instructions to BE, Each record would be a single line of code
+
 
                     int numb1 = (int)dataGridView1.Rows[r1].Cells[2].Value;
                     int numb2 = (int)dataGridView1.Rows[r2].Cells[2].Value;
@@ -93,11 +96,12 @@ namespace LISCViewer
                         //sub
                         case 7: dataGridView1.Rows[dest].Cells[2].Value = numb1 - numb2; break;
 
-                        
+
                     }
 
                 }
-
+                //Binary Display translation of instructions
+                //performOpcode(string[] normalizedInstructions){ }
 
                 // var LISCRunner = new LISCRunner();
                 // LISCRunner.ComputeValues(stringInstruction, binaryInstruction);
@@ -346,6 +350,11 @@ namespace LISCViewer
         }
 
         private void binaryDisplayCode_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void codeBox_TextChanged(object sender, EventArgs e)
         {
 
         }

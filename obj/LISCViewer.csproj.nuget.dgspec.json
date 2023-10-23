@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Projects\\LISCViewer\\LISCViewer.csproj": {}
+    "C:\\Users\\esevi\\GitProjects\\CIS661_Group_Project\\LISCViewer.csproj": {}
   },
   "projects": {
-    "C:\\Projects\\LISCViewer\\LISCViewer.csproj": {
+    "C:\\Users\\esevi\\GitProjects\\CIS661_Group_Project\\LISCViewer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projects\\LISCViewer\\LISCViewer.csproj",
+        "projectUniqueName": "C:\\Users\\esevi\\GitProjects\\CIS661_Group_Project\\LISCViewer.csproj",
         "projectName": "LISCViewer",
-        "projectPath": "C:\\Projects\\LISCViewer\\LISCViewer.csproj",
+        "projectPath": "C:\\Users\\esevi\\GitProjects\\CIS661_Group_Project\\LISCViewer.csproj",
         "packagesPath": "C:\\Users\\esevi\\.nuget\\packages\\",
-        "outputPath": "C:\\Projects\\LISCViewer\\obj\\",
+        "outputPath": "C:\\Users\\esevi\\GitProjects\\CIS661_Group_Project\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
