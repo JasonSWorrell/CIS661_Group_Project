@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Frontend.MainPage">
+             x:Class="Frontend.MainPage"
+             
+              >
 
     <ContentPage.MenuBarItems>
         <MenuBarItem Text="File">
@@ -38,7 +40,10 @@
                  IconImageSource="add.png" />
     </ContentPage.ToolbarItems>
 
+
+
     <ScrollView>
+
         <FlexLayout Direction="Row"
             AlignItems="Start"
             JustifyContent="Start">
@@ -48,11 +53,20 @@
                     HorizontalOptions="StartAndExpand"
                     VerticalOptions="StartAndExpand">
                 <Label FontSize="22">Program</Label>
+                <Button
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Text="RUN"
+                    Clicked="onRun"
+           
+                 />
                 <Editor x:Name="Program"
-                        MinimumWidthRequest="150"
+                        MinimumWidthRequest="250"
                         MinimumHeightRequest="500"
                         TextChanged="OnEditorTextChanged"
-                        Completed="OnEditorCompleted" />
+                        Completed="OnEditorCompleted" 
+                        
+                        />
             </VerticalStackLayout>
             <VerticalStackLayout
                     Spacing="1"
@@ -72,379 +86,37 @@
                     >
                     REGISTER BANK
                 </Label>
-                <FlexLayout>
-                    <VerticalStackLayout
-                        Spacing="1"
-                        Padding="1"
-                        HorizontalOptions="StartAndExpand"
-                        VerticalOptions="StartAndExpand"
-                        MinimumWidthRequest="155">
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>Name</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>zero</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>sp</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>t0</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>t1</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>t2</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>t3</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>s0</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>s1</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>s2</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>s3</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>v</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>a0</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>a1</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>a2</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>ra</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>ker</Label>
-                        </Border>
-                    </VerticalStackLayout>
-                    <VerticalStackLayout
-            Spacing="1"
-            Padding="1"
-            HorizontalOptions="StartAndExpand"
-            VerticalOptions="StartAndExpand"
-                        MinimumWidthRequest="155">
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>Binary</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0000</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0001</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0010</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0011</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0100</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0101</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0110</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0111</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>1000</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>1001</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>1010</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>1011</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>1100</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>1101</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>1110</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>1111</Label>
-                        </Border>
-                    </VerticalStackLayout>
-                    <VerticalStackLayout
-                        Spacing="1"
-                        Padding="1"
-                        HorizontalOptions="StartAndExpand"
-                        VerticalOptions="StartAndExpand"
-                        MinimumWidthRequest="155">
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>Number</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>1</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>2</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>3</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>4</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>5</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>6</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>7</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>8</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>9</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>10</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>11</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>12</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>13</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>14</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>15</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">    
-                            <Label>16</Label>
-                        </Border>
-                    </VerticalStackLayout>
-                    <VerticalStackLayout
-                        Spacing="1"
-                        Padding="1"
-                        HorizontalOptions="StartAndExpand"
-                        VerticalOptions="StartAndExpand"
-                        MinimumWidthRequest="155">
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>Value</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0000 0000 0000</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0000 0000 0000</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0x0000</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0x0000</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0x0000</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0x0000</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0x0000</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0x0000</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0xFFFF</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0xFFFF</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0xFFFF</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0xFFFF</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0xFFFF</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0xFFFF</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0xFFFF</Label>
-                        </Border>
-                        <Border Stroke="#000000"
-                            StrokeThickness="1"
-                            Padding="1">
-                            <Label>0xFFFF</Label>
-                        </Border>
-                    </VerticalStackLayout>
-                </FlexLayout>
+                <CollectionView x:Name="DataGridCollectionView" ItemsSource="{Binding DataItems}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10">
+                                <!-- Define columns -->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Add other columns as needed -->
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Bind data -->
+                                <Label Text="{Binding ID}" Grid.Column="0" />
+                                <Label Text="{Binding Name}" Grid.Column="1" />
+                                <Label Text="{Binding value}" Grid.Column="2" />
+                                <!-- Add other column data as needed -->
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </VerticalStackLayout>
+
         </FlexLayout>
-        
+
+
     </ScrollView>
+
+
 
 </ContentPage>
