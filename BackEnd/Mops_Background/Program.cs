@@ -3,6 +3,13 @@
 // input string then parse it into parsed input strings
 // take parsed input string and change the register binarys to the output binarys
 
+// I tried to find a way to just leave a comment on this, but commenting was the only way I could find quickly. I'll do better next time.
+// Anyway... This is a really good start, We would need to create this into at least one class though and the class variables should have public and or private types.
+// Ex. private string stemp1;
+//     public string Stemp1 {get;} // set intentionally left out for the public class variable in this case.
+// I would suggest doing both because we can control more about how the code in interacted in the GUI that way. It is possible to accidently alter the output. 
+
+
 using System;
 using System.Data.SqlTypes;
 using System.Reflection.Metadata.Ecma335;
@@ -20,6 +27,9 @@ uint utemp2 = 0;
 uint utemp3 = 0;
 
 bool btemp1 = false;
+
+// Memory Array
+string[] stack;
 
 // Saved Register Variables
 string szero = "0000000000000000";
@@ -42,7 +52,7 @@ string sk    = "0000000000000000";
 //string Input_String = "sll t3 4";
 string Input_String = "and t3 t0 s1";
 //string Input_String = "or s2 0 t2";
-string[] Parsed_Input_String = Input_String.Split(' ');
+string[] Parsed_Input_String = Input_String.Replace("$","").Replace(",","").Split(' ');
 
 // Add the word Decimal after int
 int Get_The_Int_Value_Of_Register_X(string Register_String)
@@ -294,6 +304,23 @@ void Store_Binary_String_Value_Into_A_Register_String_Variable(string Register, 
     }
 
 }
+
+void Push_To_Stack(int value)   // Pushes a Value to the Stack and Then Increments the Stack Pointer
+{
+    string binary_value = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(value);
+    int stack_pointer = Get_The_Int_Value_Of_Register_X(ssp);
+    stack[stack_pointer] = binary_value;
+    stack_pointer++;
+    string binary_stack_pointer = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(stack_pointer);
+    ssp = binary_stack_pointer;
+}
+
+/*
+int Pull_From_Stack(int index)
+{
+
+}
+*/
 
 void Perform_The_Op_Code(string[] Parsed_Input_Strin)
 {
