@@ -5,6 +5,7 @@ namespace Frontend
 {
     public partial class MainPage : ContentPage
     {
+        #region //TempVar
         string calcTotal;
         int num1;
         int num2;
@@ -23,8 +24,7 @@ namespace Frontend
         {
   
         }
-
-
+        #endregion
 
         public MainPage()
         {
@@ -40,66 +40,6 @@ namespace Frontend
             // Sample data for testing
            // DataItems = registers;
             BindingContext = this; // Set the BindingContext
-        }
-    
-
-
-        void onRun(object sender, EventArgs e)
-        {
-            //BinaryTranslation.Text = Program.Text;
-            // txtDisplayTotal.Text = codeBox.Text;
-            Program.Unfocus();  // Force update of binding
-            String[] fullCode = Program.Text.Replace("\r", "\n").Split('\n');
-
-            BinaryTranslation.Text = "";
-
-            foreach (String line in fullCode)
-            {
-                if (line != "")
-                {
-                    stringInstruction = line.Replace(", ", " ").Split(new char[] { ',', ' ', });
-                    binaryInstruction = generateBinaryInstructions.GetBinary(stringInstruction);
-
-                    int op = binaryInstruction[0];
-                    int dest = binaryInstruction[1];
-                    int r1 = binaryInstruction[2];
-                    int r2 = binaryInstruction[3];
-                    Register Item1 = DataItems[dest];
-                    Register Item2 = DataItems[r1];
-                    Register Item3 = DataItems[r2];
-
-
-
-                    //Binary Display translation of instructions
-                    
-                    BinaryTranslation.Text += Convert.ToString(op, 2).PadLeft(4, '0') + " ";
-                    BinaryTranslation.Text += Convert.ToString(dest, 2).PadLeft(4, '0') + " ";
-                    BinaryTranslation.Text += Convert.ToString(r1, 2).PadLeft(4, '0') + " ";
-                    BinaryTranslation.Text += Convert.ToString(r2, 2).PadLeft(4, '0') + " ";
-                    BinaryTranslation.Text += "\n" ;
-
-                    int numb1 = (int)Item2.value;
-                    int numb2 = (int)Item3.value;
-
-                    
-                    //int numb1 = (int)dataGridView1.Rows[r1].Cells[2].Value;
-                    //int numb2 = (int)dataGridView1.Rows[r2].Cells[2].Value;
-
-                    switch (op)
-                    {
-                        //add
-                        case 6: DataItems[dest].value = numb1 + numb2; break;
-                        //sub
-                        case 7: DataItems[dest].value = numb1 - numb2; break;
-
-
-                    }
-                   // DataGridCollectionView.ItemsSource = null;
-                    //DataGridCollectionView.ItemsSource = DataItems;
-                    //  InitializeComponent();
-                }
-
-            }
         }
 
         #region //MENU
@@ -123,7 +63,63 @@ namespace Frontend
         #endregion
 
         #region //Action
+         void onRun(object sender, EventArgs e)
+                {
+                    //BinaryTranslation.Text = Program.Text;
+                    // txtDisplayTotal.Text = codeBox.Text;
+                    Program.Unfocus();  // Force update of binding
+                    String[] fullCode = Program.Text.Replace("\r", "\n").Split('\n'); // This is throwing an error, might just need to set it to an object instance. Though it looks like it might be.
 
+                    BinaryTranslation.Text = "";
+
+                    foreach (String line in fullCode)
+                    {
+                        if (line != "")
+                        {
+                            stringInstruction = line.Replace(", ", " ").Split(new char[] { ',', ' ', });
+                            binaryInstruction = generateBinaryInstructions.GetBinary(stringInstruction);
+
+                            int op = binaryInstruction[0];
+                            int dest = binaryInstruction[1];
+                            int r1 = binaryInstruction[2];
+                            int r2 = binaryInstruction[3];
+                            Register Item1 = DataItems[dest];
+                            Register Item2 = DataItems[r1];
+                            Register Item3 = DataItems[r2];
+
+
+
+                            //Binary Display translation of instructions
+                    
+                            BinaryTranslation.Text += Convert.ToString(op, 2).PadLeft(4, '0') + " ";
+                            BinaryTranslation.Text += Convert.ToString(dest, 2).PadLeft(4, '0') + " ";
+                            BinaryTranslation.Text += Convert.ToString(r1, 2).PadLeft(4, '0') + " ";
+                            BinaryTranslation.Text += Convert.ToString(r2, 2).PadLeft(4, '0') + " ";
+                            BinaryTranslation.Text += "\n" ;
+
+                            int numb1 = (int)Item2.value;
+                            int numb2 = (int)Item3.value;
+
+                    
+                            //int numb1 = (int)dataGridView1.Rows[r1].Cells[2].Value;
+                            //int numb2 = (int)dataGridView1.Rows[r2].Cells[2].Value;
+
+                            switch (op)
+                            {
+                                //add
+                                case 6: DataItems[dest].value = numb1 + numb2; break;
+                                //sub
+                                case 7: DataItems[dest].value = numb1 - numb2; break;
+
+
+                            }
+                           // DataGridCollectionView.ItemsSource = null;
+                            //DataGridCollectionView.ItemsSource = DataItems;
+                            //  InitializeComponent();
+                        }
+
+                    }
+                }
         #endregion
 
     }

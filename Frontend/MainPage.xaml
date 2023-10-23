@@ -45,7 +45,7 @@
     <ScrollView>
 
         <FlexLayout Direction="Row"
-            AlignItems="Start"
+            AlignItems="Stretch"
             JustifyContent="Start">
             <VerticalStackLayout
                     Spacing="1"
@@ -53,20 +53,14 @@
                     HorizontalOptions="StartAndExpand"
                     VerticalOptions="StartAndExpand">
                 <Label FontSize="22">Program</Label>
-                <Button
-                    Grid.Row="1"
-                    Grid.ColumnSpan="2"
-                    Text="RUN"
-                    Clicked="onRun"
-           
-                 />
+                
                 <Editor x:Name="Program"
                         MinimumWidthRequest="250"
                         MinimumHeightRequest="500"
                         TextChanged="OnEditorTextChanged"
                         Completed="OnEditorCompleted" 
-                        
                         />
+                
             </VerticalStackLayout>
             <VerticalStackLayout
                     Spacing="1"
@@ -110,6 +104,14 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Button 
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Text="RUN"
+                    Clicked="onRun"
+                 />
             </VerticalStackLayout>
 
         </FlexLayout>
