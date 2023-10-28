@@ -12,6 +12,7 @@
 
 using System;
 using System.Data.SqlTypes;
+using System.Reflection.Emit;
 using System.Reflection.Metadata.Ecma335;
 
 string stemp1 = "";
@@ -34,25 +35,127 @@ string[] stack;
 // Saved Register Variables
 string szero = "0000000000000000";
 string ssp   = "0000000000000000";
-string st0   = "0000000011111000";
+string st0   = "0000000000000000";
 string st1   = "0000000000000000";
-string st2   = "0000000000111110";
-string st3   = "0000000000000100";
+string st2   = "0000000000000000";
+string st3   = "0000000000000000";
 string ss0   = "0000000000000000";
-string ss1   = "0000000010011101";
+string ss1   = "0000000000000000";
 string ss2   = "0000000000000000";
-string ss3   = "0000000000000001";
+string ss3   = "0000000000000000";
 string sv    = "0000000000000000";
 string sa0   = "0000000000000000";
 string sa1   = "0000000000000000";
 string sa2   = "0000000000000000";
 string sra   = "0000000000000000";
 string sk    = "0000000000000000";
+
+string spc   = "0000000000000000";
 //
 //string Input_String = "sll t3 4";
+// Simple Swap Task
+string[] Swap_Task = { "addi s0 5", "addi s1 7", "add t0 s1 zero", "add s1 s0 zero", "add s0 t0 zero" };
+string[] Yes_Branch_Task_With_Label = { "addi s0 69", "addi s1 68", "slt t0 s0 s1", "biz t0 exit", "addi s1 20","exit", "addi s1 5"};
+string[] Yes_Branch_Task_With_No_Label = { "addi s0 69", "addi s1 68", "slt t0 s0 s1", "biz t0 2", "addi s1 20", "addi s1 5" };
+string[] No_Branch_Task_With_Label = { "addi s0 69", "addi s1 70", "slt t0 s0 s1", "biz t0 exit", "addi s1 20", "exit", "addi s1 5" };
+string[] No_Branch_Task_With_No_Label = { "addi s0 69", "addi s1 70", "slt t0 s0 s1", "biz t0 2", "addi s1 20", "addi s1 5" };
+
+string[] Jal_Task = {"addi s3 3", "biz zero skipahead", "func", "addi s2 2", "jr ra", "addi t0 5", "skipahead", "jal func", "addi s1 1"};
+
+
 string Input_String = "and t3 t0 s1";
-//string Input_String = "or s2 0 t2";
 string[] Parsed_Input_String = Input_String.Replace("$","").Replace(",","").Split(' ');
+string[] Label_Locations = new string[200];
+
+int Is_Valid_Op_Code(string Op_Code)
+{
+    int return_value = 0;
+
+    if (Op_Code.Equals("loadw"))
+    {
+        return_value = 1;
+    }
+    else if (Op_Code.Equals("storew"))
+    {
+        return_value = 1;
+    }
+    else if (Op_Code.Equals("sll"))
+    {
+        return_value = 1;
+    }
+    else if (Op_Code.Equals("slt"))
+    {
+        return_value = 1;
+    }
+    else if (Op_Code.Equals("isequal"))
+    {
+        return_value = 1;
+    }
+    else if (Op_Code.Equals("biz"))
+    {
+        return_value = 1;
+    }
+    else if (Op_Code.Equals("add"))
+    {
+        return_value = 1;
+    }
+    else if (Op_Code.Equals("sub"))
+    {
+        return_value = 1;
+    }
+    else if (Op_Code.Equals("addi"))
+    {
+        return_value = 1;
+    }
+    else if (Op_Code.Equals("jal"))
+    {
+        return_value = 1;
+    }
+    else if (Op_Code.Equals("jr"))
+    {
+        return_value = 1;
+    }
+    else if (Op_Code.Equals("and"))
+    {
+        return_value = 1;
+    }
+    else if (Op_Code.Equals("or"))
+    {
+        return_value = 1;
+    }
+
+    return return_value;
+}
+
+void Initialize_Label_Locations(string[] Labels, string[] Commands)
+{
+
+    for (int i = 0; i < Commands.Length; i++)
+    {
+
+        string[] Parsed_Commands = Commands[i].Replace("$", "").Replace(",", "").Split(' ');
+
+        if (Is_Valid_Op_Code(Parsed_Commands[0]) == 1)
+        {
+            Labels[i] = "";
+        }
+        else
+        {
+            Labels[i] = Parsed_Commands[0];
+        }
+
+        //Console.WriteLine(Labels[i]);
+
+    }
+}
+
+void Increment_The_PC_By_X(int Increment)
+{
+    itemp1 = Get_The_Int_Value_Of_Register_X("pc");
+    itemp1 = itemp1 + Increment;
+    stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp1);
+    Store_Binary_String_Value_Into_A_Register_String_Variable("pc", stemp1);
+}
 
 // Add the word Decimal after int
 int Get_The_Int_Value_Of_Register_X(string Register_String)
@@ -121,6 +224,10 @@ int Get_The_Int_Value_Of_Register_X(string Register_String)
     else if (Register_String.Equals("k"))
     {
         return_value = Convert.ToInt32(sk, 2);
+    }
+    else if (Register_String.Equals("pc"))
+    {
+        return_value = Convert.ToInt32(spc, 2);
     }
 
     return return_value;
@@ -193,13 +300,17 @@ uint Get_The_Binary_Int_Value_Of_Register_X(string Register_String)
     {
         return_value = Convert.ToUInt32(sk, 2);
     }
+    else if (Register_String.Equals("pc"))
+    {
+        return_value = Convert.ToUInt32(spc, 2);
+    }
 
     return return_value;
 }
 
 
 //remove the word Register from this function and add decimal word
-string Get_The_Binary_String_Value_Of_An_Int_Register_Numer(int Register_int)
+string Get_The_Binary_String_Value_Of_An_Int_Numer(int Register_int)
 {
     string sbinary = Convert.ToString(Register_int, 2);
     long ibinary = long.Parse(sbinary);
@@ -302,16 +413,20 @@ void Store_Binary_String_Value_Into_A_Register_String_Variable(string Register, 
     {
         sk = Value;
     }
+    else if (Register.Equals("pc"))
+    {
+        spc = Value;
+    }
 
 }
 
 void Push_To_Stack(int value)   // Pushes a Value to the Stack and Then Increments the Stack Pointer
 {
-    string binary_value = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(value);
+    string binary_value = Get_The_Binary_String_Value_Of_An_Int_Numer(value);
     int stack_pointer = Get_The_Int_Value_Of_Register_X(ssp);
     stack[stack_pointer] = binary_value;
     stack_pointer++;
-    string binary_stack_pointer = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(stack_pointer);
+    string binary_stack_pointer = Get_The_Binary_String_Value_Of_An_Int_Numer(stack_pointer);
     ssp = binary_stack_pointer;
 }
 
@@ -322,31 +437,32 @@ int Pull_From_Stack(int index)
 }
 */
 
-void Perform_The_Op_Code(string[] Parsed_Input_Strin)
+void Perform_The_Op_Code(string[] Parsed_String, int Number_Of_Commands)
 {
-    if (Parsed_Input_String[0].Equals("sll"))
+    if (Parsed_String[0].Equals("sll"))
     {
         // Pull uint value and int value
-        utemp1 = Get_The_Binary_Int_Value_Of_Register_X(Parsed_Input_String[1]);
-        itemp2 = int.Parse(Parsed_Input_String[2]);
+        utemp1 = Get_The_Binary_Int_Value_Of_Register_X(Parsed_String[1]);
+        itemp2 = int.Parse(Parsed_String[2]);
 
         // Do Shift Left Logical
         utemp3 = utemp1 << itemp2;
         itemp3 = Convert.ToInt32(utemp3);
 
         // Store Value into Register
-        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itemp3);
-        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_Input_String[1], stemp1);
+        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp3);
+        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_String[1], stemp1);
+        Increment_The_PC_By_X(1);
 
         // Debug Output
         Console.WriteLine(st3);
 
     }
-    else if (Parsed_Input_String[0].Equals("slt"))
+    else if (Parsed_String[0].Equals("slt"))
     {
         // Pull int values
-        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[2]);
-        itemp2 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[3]);
+        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_String[2]);
+        itemp2 = Get_The_Int_Value_Of_Register_X(Parsed_String[3]);
 
         // Do less than Check
         if (itemp1 < itemp2)
@@ -359,17 +475,18 @@ void Perform_The_Op_Code(string[] Parsed_Input_Strin)
         }
 
         // Store Value into Register
-        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itemp3);
-        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_Input_String[1], stemp1);
+        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp3);
+        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_String[1], stemp1);
+        Increment_The_PC_By_X(1);
 
         // Debug Output
         //Console.WriteLine(sa0);
     }
-    else if (Parsed_Input_String[0].Equals("isequal"))
+    else if (Parsed_String[0].Equals("isequal"))
     {
         // Pull int values
-        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[2]);
-        itemp2 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[3]);
+        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_String[2]);
+        itemp2 = Get_The_Int_Value_Of_Register_X(Parsed_String[3]);
 
         // Do Equal Check
         if (itemp1.Equals(itemp2))
@@ -382,96 +499,217 @@ void Perform_The_Op_Code(string[] Parsed_Input_Strin)
         }
 
         // Store Value into Register
-        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itemp3);
-        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_Input_String[1], stemp1);
+        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp3);
+        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_String[1], stemp1);
+        Increment_The_PC_By_X(1);
 
         // Debug Output
         //Console.WriteLine(sa0);
     }
-    else if (Parsed_Input_String[0].Equals("add"))
+    else if (Parsed_String[0].Equals("biz"))
     {
         // Pull int values
-        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[2]);
-        itemp2 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[3]);
+        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_String[1]);
+        itemp2 = 0;
+
+        // Search for the PC count of the Label
+        for (int i = 0; i < Number_Of_Commands; i++)
+        {
+            if (Parsed_String[2].Equals(Label_Locations[i]))
+            {
+                itemp2 = i + 1;
+                itemp3 = 1;
+                break;
+            }
+        }
+
+        // If there is no valid Label assume the value is an offset integer
+        if (itemp2.Equals(0))
+        {
+            itemp3 = 0;
+            itemp2 = int.Parse(Parsed_String[2]);
+        }
+
+        
+        // Check if there is a branch or not
+        if (itemp1.Equals(0))
+        {
+            // If a Valid label exists then change the PC counter to the label location
+            // If no Valid label, increment the PC by the given int
+            if (itemp3.Equals(1))
+            {
+                stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp2);
+                Store_Binary_String_Value_Into_A_Register_String_Variable("pc", stemp1);
+            }
+            else if (itemp3.Equals(0))
+            {
+                Increment_The_PC_By_X(itemp2);
+            }
+            
+        }
+        else if (!itemp1.Equals(0))
+        {
+            Increment_The_PC_By_X(1);
+        }
+
+        // Debug Output
+        //Console.WriteLine(sa0);
+
+    }
+    else if (Parsed_String[0].Equals("add"))
+    {
+        // Pull int values
+        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_String[2]);
+        itemp2 = Get_The_Int_Value_Of_Register_X(Parsed_String[3]);
 
         // Do Addition
         itemp3 = itemp1 + itemp2;
 
         // Store Value into Register
-        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itemp3);
-        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_Input_String[1], stemp1);
+        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp3);
+        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_String[1], stemp1);
+        Increment_The_PC_By_X(1);
 
         // Debug Output
         //Console.WriteLine(sa0);
+
     }
-    else if (Parsed_Input_String[0].Equals("sub"))
+    else if (Parsed_String[0].Equals("sub"))
     {
         // Pull int values
-        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[2]);
-        itemp2 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[3]);
+        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_String[2]);
+        itemp2 = Get_The_Int_Value_Of_Register_X(Parsed_String[3]);
 
         // Do Subtraction
         itemp3 = itemp1 - itemp2;
 
         // Store Value into Register
-        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itemp3);
-        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_Input_String[1], stemp1);
+        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp3);
+        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_String[1], stemp1);
+        Increment_The_PC_By_X(1);
 
         // Debug Output
         //Console.WriteLine(sa0);
     }
-    else if (Parsed_Input_String[0].Equals("addi"))
+    else if (Parsed_String[0].Equals("addi"))
     {
         // Pull int values
-        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[1]);
-        itemp2 = int.Parse(Parsed_Input_String[2]);
+        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_String[1]);
+        itemp2 = int.Parse(Parsed_String[2]);
 
         // Do Subtraction
         itemp3 = itemp1 + itemp2;
 
         // Store Value into Register
-        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itemp3);
-        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_Input_String[1], stemp1);
+        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp3);
+        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_String[1], stemp1);
+        Increment_The_PC_By_X(1);
 
         // Debug Output
         //Console.WriteLine(sa0);
+
     }
-    else if (Parsed_Input_String[0].Equals("and"))
+    else if (Parsed_String[0].Equals("jal"))
+    {
+        // Set itemp2 to 0 so 
+        itemp2 = 0;
+
+        // Store the next PC number into the ra register
+        itemp3 = Get_The_Int_Value_Of_Register_X("pc");
+        itemp3 = itemp3 + 1;
+        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp3);
+        Store_Binary_String_Value_Into_A_Register_String_Variable("ra", stemp1);
+
+        // Search for the PC count of the Label
+        for (int i = 0; i < Number_Of_Commands; i++)
+        {
+            if (Parsed_String[1].Equals(Label_Locations[i]))
+            {
+                itemp2 = i + 1;
+                itemp3 = 1;
+                break;
+            }
+        }
+
+        // If there is no valid Label assume the value is an offset integer
+        if (itemp2.Equals(0))
+        {
+            itemp3 = 0;
+            itemp2 = int.Parse(Parsed_String[2]);
+        }
+
+        // If a Valid label exists then change the PC counter to the label location
+        // If no Valid label, increment the PC by the given int
+        if (itemp3.Equals(1))
+        {
+            stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp2);
+            Store_Binary_String_Value_Into_A_Register_String_Variable("pc", stemp1);
+        }
+        else if (itemp3.Equals(0))
+        {
+            // Branch the PC to the given register
+            Increment_The_PC_By_X(itemp2);
+        }
+
+        // Debug Output
+        //Console.WriteLine(sa0);
+
+    }
+    else if (Parsed_String[0].Equals("jr"))
+    {
+        // Pull int values
+        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_String[1]);
+
+        // Change the PC to the given register
+        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp1);
+        Store_Binary_String_Value_Into_A_Register_String_Variable("pc", stemp1);
+
+        // Debug Output
+        //Console.WriteLine(sa0);
+
+    }
+    else if (Parsed_String[0].Equals("and"))
     {
         // Pull uint value and int value
-        utemp1 = Get_The_Binary_Int_Value_Of_Register_X(Parsed_Input_String[2]);
-        utemp2 = Get_The_Binary_Int_Value_Of_Register_X(Parsed_Input_String[3]);
+        utemp1 = Get_The_Binary_Int_Value_Of_Register_X(Parsed_String[2]);
+        utemp2 = Get_The_Binary_Int_Value_Of_Register_X(Parsed_String[3]);
 
         // Do Bitwise And then convert to an int32 value
         utemp3 = utemp1 & utemp2;
         itemp3 = Convert.ToInt32(utemp3);
 
         // Store Value into Register
-        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itemp3);
-        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_Input_String[1], stemp1);
+        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp3);
+        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_String[1], stemp1);
+        Increment_The_PC_By_X(1);
 
         // Debug Output
         //Console.WriteLine(st3);
 
     }
-    else if (Parsed_Input_String[0].Equals("or"))
+    else if (Parsed_String[0].Equals("or"))
     {
         // Pull uint value and int value
-        utemp1 = Get_The_Binary_Int_Value_Of_Register_X(Parsed_Input_String[2]);
-        utemp2 = Get_The_Binary_Int_Value_Of_Register_X(Parsed_Input_String[3]);
+        utemp1 = Get_The_Binary_Int_Value_Of_Register_X(Parsed_String[2]);
+        utemp2 = Get_The_Binary_Int_Value_Of_Register_X(Parsed_String[3]);
 
         // Do Shift Left Logical
         utemp2 = utemp1 | utemp2;
         itemp3 = Convert.ToInt32(utemp2);
 
         // Store Value into Register
-        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itemp3);
-        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_Input_String[1], stemp1);
+        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp3);
+        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_String[1], stemp1);
+        Increment_The_PC_By_X(1);
 
         // Debug Output
         Console.WriteLine(ss2);
-
     }
+    else
+    {
+        Increment_The_PC_By_X(1);
+    }
+
 }
 
 
@@ -479,68 +717,32 @@ void Perform_The_Op_Code(string[] Parsed_Input_Strin)
 //Start Main Processing
 //######################################
 
-Perform_The_Op_Code(Parsed_Input_String);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-Console.WriteLine(stest1);
-itest1 = Get_The_Int_Value_Of_Register_X(stest1);
-Console.WriteLine(itest1);
-string sTest = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itest1);
-Console.WriteLine(sTest);
-*/
-
-
-/*
-if (Parsed_Input_String[0].Equals("add"))
+void Debut_Prints(string Command)
 {
-    // Pull int values to add
-    itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[2]);
-    itemp2 = Get_The_Int_Value_Of_Register_X(Parsed_Input_String[3]);
-
-    // Do Addition
-    itemp3 = itemp1 + itemp2;
-
-    // Store Value into Register
-    stemp1 = Get_The_Binary_String_Value_Of_An_Int_Register_Numer(itemp3);
-    Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_Input_String[1], stemp1);
-
-    Console.WriteLine(sa0);
-    //Console.WriteLine("op code add");
+    Console.WriteLine("");
+    Console.WriteLine(Command);
+    Console.WriteLine("PC = " + Get_The_Int_Value_Of_Register_X("pc"));
+    Console.WriteLine("s1 = " + ss1);
+    Console.WriteLine("s2 = " + ss2);
+    Console.WriteLine("s3 = " + ss3);
+    Console.WriteLine("t0 = " + st0);
+    Console.WriteLine("ra = " + sra);
 }
 
-//string[] words = Input_String.Split(' ');
-/*
-foreach (var word in Parsed_Input_String)
+Console.WriteLine("Initialize");
+Console.WriteLine("PC = " + spc);
+Console.WriteLine("s1 = " + ss1);
+Console.WriteLine("s2 = " + ss2);
+Console.WriteLine("s3 = " + ss3);
+Console.WriteLine("t0 = " + st0);
+Console.WriteLine("ra = " + sra);
+
+Initialize_Label_Locations(Label_Locations, Jal_Task);
+
+for (int i = 0; i < Jal_Task.Length; i = Get_The_Int_Value_Of_Register_X("pc"))
 {
-    System.Console.WriteLine($"{word}");
-    
+    Console.ReadLine();
+    string[] Parsed_Command = Jal_Task[i].Replace("$", "").Replace(",", "").Split(' ');
+    Perform_The_Op_Code(Parsed_Command, Jal_Task.Length);
+    Debut_Prints(Jal_Task[i].Replace("$", "").Replace(",", ""));
 }
-*/
-
-
