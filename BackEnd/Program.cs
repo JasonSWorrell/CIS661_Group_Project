@@ -1,4 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
+// See https://aka.ms/new-console-template for more information
 
 // input string then parse it into parsed input strings
 // take parsed input string and change the register binarys to the output binarys
@@ -12,6 +12,7 @@
 
 using System;
 using System.Data.SqlTypes;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Reflection.Metadata.Ecma335;
 
@@ -29,12 +30,13 @@ uint utemp3 = 0;
 
 bool btemp1 = false;
 
-// Memory Array
-string[] stack;
+// Memory Array - Stack in ISA goes to 200, but we are only using a 100 element array
+// Conversions done in the push and pull functions
+string[] stack = new string[100];
 
 // Saved Register Variables
 string szero = "0000000000000000";
-string ssp   = "0000000000000000";
+string ssp   = "0000000011001000";  // initialized to the max value of the stack array: 200
 string st0   = "0000000000000000";
 string st1   = "0000000000000000";
 string st2   = "0000000000000000";
@@ -61,6 +63,8 @@ string[] No_Branch_Task_With_Label = { "addi s0 69", "addi s1 70", "slt t0 s0 s1
 string[] No_Branch_Task_With_No_Label = { "addi s0 69", "addi s1 70", "slt t0 s0 s1", "biz t0 2", "addi s1 20", "addi s1 5" };
 
 string[] Jal_Task = {"addi s3 3", "biz zero skipahead", "func", "addi s2 2", "jr ra", "addi t0 5", "skipahead", "jal func", "addi s1 1"};
+
+string[] Load_and_Store = { "addi sp -8", "addi t0 7", "storew t0 0(sp)", "add t0 zero zero", "addi t0 69", "storew t0 2(sp)", "add t0 zero zero", "addi t0 10", "storew t0 4(sp)", "add t0 zero zero", "addi t0 5", "storew t0 6(sp)", "add t0 zero zero", "addi t0 42", "storew t0 8(sp)", "add t0 zero zero", "add s0 sp zero", "addi a1 2", "addi a2 3", "addi ra 35", "swap:", "addi sp -2", "storew s0 0(sp)", "add t1 a1 zero", "sll t1 1", "add t1 t1 a0", "loadw s0 0(t1)", "add t2 a2 zero", "sll t2 1", "add t2 t2 a0", "loadw t0 0(t2)", "storew t0 0(t1)", "storew s0 0(t2)", "loadw s0 0(sp)", "addi sp 2"};
 
 
 string Input_String = "and t3 t0 s1";
@@ -420,22 +424,19 @@ void Store_Binary_String_Value_Into_A_Register_String_Variable(string Register, 
 
 }
 
-void Push_To_Stack(int value)   // Pushes a Value to the Stack and Then Increments the Stack Pointer
+void Push_To_Stack(int value, int offset, int index)   // Pushes a Value to the Stack and Then Increments the Stack Pointer
 {
-    string binary_value = Get_The_Binary_String_Value_Of_An_Int_Numer(value);
-    int stack_pointer = Get_The_Int_Value_Of_Register_X(ssp);
-    stack[stack_pointer] = binary_value;
-    stack_pointer++;
-    string binary_stack_pointer = Get_The_Binary_String_Value_Of_An_Int_Numer(stack_pointer);
-    ssp = binary_stack_pointer;
+    string binary_value = Get_The_Binary_String_Value_Of_An_Int_Numer(value);   // convert value to be stored into a binary string 
+    index = ((index + offset) / 2) - 1;  // get the index of the stack array to store binary string
+    stack[index] = binary_value;
 }
 
-/*
-int Pull_From_Stack(int index)
+int Pull_From_Stack(int offset, int index)
 {
-
+    index = ((index + offset) / 2) - 1;  // get the index of the stack
+    int value = Convert.ToInt32(stack[index], 2);
+    return value;
 }
-*/
 
 void Perform_The_Op_Code(string[] Parsed_String, int Number_Of_Commands)
 {
@@ -530,7 +531,7 @@ void Perform_The_Op_Code(string[] Parsed_String, int Number_Of_Commands)
             itemp2 = int.Parse(Parsed_String[2]);
         }
 
-        
+
         // Check if there is a branch or not
         if (itemp1.Equals(0))
         {
@@ -545,7 +546,7 @@ void Perform_The_Op_Code(string[] Parsed_String, int Number_Of_Commands)
             {
                 Increment_The_PC_By_X(itemp2);
             }
-            
+
         }
         else if (!itemp1.Equals(0))
         {
@@ -608,6 +609,31 @@ void Perform_The_Op_Code(string[] Parsed_String, int Number_Of_Commands)
         // Debug Output
         //Console.WriteLine(sa0);
 
+    }
+    else if (Parsed_String[0].Equals("storew"))
+    {
+        // Pull int values
+        itemp1 = Get_The_Int_Value_Of_Register_X(Parsed_String[1]); // get value to be stored
+        itemp2 = int.Parse(Parsed_String[2]); // offset
+        itemp3 = Get_The_Int_Value_Of_Register_X(Parsed_String[3]); // get the address or index of the location to store value
+
+        // Store Value
+        Push_To_Stack(itemp1, itemp2, itemp3);
+        Increment_The_PC_By_X(1);
+    }
+    else if (Parsed_String[0].Equals("loadw"))
+    {
+        // Pull int values
+        itemp1 = int.Parse(Parsed_String[2]);   // offset
+        itemp2 = Get_The_Int_Value_Of_Register_X(Parsed_String[3]); // get the address or index of the location for the value to be loaded
+
+        // Load Value
+        itemp3 = Pull_From_Stack(itemp1, itemp2);
+
+        // Store Value Into Register
+        stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp3);
+        Store_Binary_String_Value_Into_A_Register_String_Variable(Parsed_String[1], stemp1);
+        Increment_The_PC_By_X(1);
     }
     else if (Parsed_String[0].Equals("jal"))
     {
@@ -737,12 +763,35 @@ Console.WriteLine("s3 = " + ss3);
 Console.WriteLine("t0 = " + st0);
 Console.WriteLine("ra = " + sra);
 
-Initialize_Label_Locations(Label_Locations, Jal_Task);
+Initialize_Label_Locations(Label_Locations, Load_and_Store);
 
-for (int i = 0; i < Jal_Task.Length; i = Get_The_Int_Value_Of_Register_X("pc"))
+for (int i = 0; i < Load_and_Store.Length; i = Get_The_Int_Value_Of_Register_X("pc"))
 {
     Console.ReadLine();
-    string[] Parsed_Command = Jal_Task[i].Replace("$", "").Replace(",", "").Split(' ');
-    Perform_The_Op_Code(Parsed_Command, Jal_Task.Length);
-    Debut_Prints(Jal_Task[i].Replace("$", "").Replace(",", ""));
+    string[] Parsed_Command = Load_and_Store[i].Replace("$", "").Replace(",", "").Replace("(", " ").Replace(")", "").Split(' ');
+    Perform_The_Op_Code(Parsed_Command, Load_and_Store.Length);
+    Debut_Prints(Load_and_Store[i].Replace("$", "").Replace(",", ""));
 }
+
+//Print Stack for Debug
+//Console.WriteLine();
+//for (int i = 99; i > 49; i--)
+//{
+//    Console.Write("[");
+//    Console.Write(i);
+//    Console.Write("] = ");
+//    Console.WriteLine(stack[i]);
+//}
+
+//Print Stack for Debug with Binary Conversion and Index Conversion
+Console.WriteLine();
+for (int i = 99; i > 73; i--)
+{
+    Console.Write("[");
+    Console.Write((i * 2) + 2); // print converted index
+    Console.Write("] = ");
+    Console.WriteLine(Convert.ToInt32(stack[i], 2));
+}
+Console.WriteLine();
+Console.Write("Stack Pointer = ");
+Console.WriteLine((Get_The_Binary_Int_Value_Of_Register_X("ssp") * 2) + 2);
