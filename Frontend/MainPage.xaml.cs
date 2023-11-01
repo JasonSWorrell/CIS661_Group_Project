@@ -97,8 +97,8 @@ namespace Frontend
                             BinaryTranslation.Text += Convert.ToString(r2, 2).PadLeft(4, '0') + " ";
                             BinaryTranslation.Text += "\n" ;
 
-                            int numb1 = (int)Item2.value;
-                            int numb2 = (int)Item3.value;
+                            int numb1 = (int)Item2.Val;
+                            int numb2 = (int)Item3.Val;
 
                     
                             //int numb1 = (int)dataGridView1.Rows[r1].Cells[2].Value;
@@ -107,9 +107,9 @@ namespace Frontend
                             switch (op)
                             {
                                 //add
-                                case 6: DataItems[dest].value = numb1 + numb2; break;
+                                case 6: DataItems[dest].Val = numb1 + numb2; break;
                                 //sub
-                                case 7: DataItems[dest].value = numb1 - numb2; break;
+                                case 7: DataItems[dest].Val = numb1 - numb2; break;
 
 
                             }
