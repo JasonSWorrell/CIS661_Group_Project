@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Frontend
 {
- 
-    public class findOpcode
+    public class FindOpcode
     {
 
-        public int getDecodeValue () { return 0; }
-        public int decodeOpcode(String instruct)
+        public int GetDecodeValue () { return 0; }
+        public int DecodeOpcode(String instruct)
         {
             string[] opCode = { "loadw", "storew", "sll", "slt", "isEqual", "biz", "add", "sub", "addi", "jal", "jr", "and", "or", "", "", "" };
             for (int i = 0; i < opCode.Length; i++)
@@ -24,7 +23,7 @@ namespace Frontend
             return -1; //opcode not found
         }
 
-        public int decodeValue(String instruct)
+        public int DecodeValue(String instruct)
         {
             string[] regCode = { "zero", "sp", "t0", "t1", "t2", "t3", "s0", "s1", "s2", "s3", "v", "a0", "a1", "a2", "ra", "ker" };
             int i = 0;

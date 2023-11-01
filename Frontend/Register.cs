@@ -8,72 +8,58 @@ using System.Threading.Tasks;
 namespace Frontend
 {
 
-    public class Register : INotifyPropertyChanged
+    public class Register
     {
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private int _ID;
+        #region //ClassVariables
+        private int val;
+        private int iD;
+        private string name;
         public int ID
         {
-            get { return _ID; }
+            get { return iD; }
             set
             {
-                if (_ID != value)
-                {
-                    _ID = value;
-                    OnPropertyChanged(nameof(ID));
-                }
+                iD = value;
+
             }
         }
+        public int Val
+        {
+            get { return val; }
+            set
+            {
+                val = value;
 
-        private string _Name;
+            }
+        }
         public string Name
         {
-            get { return _Name; }
+            get { return name; }
             set
             {
-                if (_Name != value)
-                {
-                    _Name = value;
-                    OnPropertyChanged(nameof(Name));
-                }
+                name = value;
+
             }
         }
+        #endregion
 
-        private double _value;
-        public double value
+        public Register(int _id, string _name, int _value) 
         {
-            get { return _value; }
-            set
-            {
-                if (_value != value)
-                {
-                    _value = value;
-                    OnPropertyChanged(nameof(value));
-                }
-            }
+            ID = _id;
+            Name = _name;
+            Val = _value;
         }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        //public List<Register> registers;
+        
+        
 
-        public static string[] regCode = { "zero", "sp", "t0", "t1", "t2", "t3", "s0", "s1", "s2", "s3", "v", "a0", "a1", "a2", "ra", "ker" };
+        
+        
 
+        
+        
 
-    public static List<Register> initRegisters()
-        {
-            List<Register> list = new List<Register>();
-
-            for (int i = 0; i < 16; i++)
-            {
-                list.Add(new Register { ID = i, Name = regCode[i], value = i+3 });
-            }
-            return list;
-        }
+        
     }
 }

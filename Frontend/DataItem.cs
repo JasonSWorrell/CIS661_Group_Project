@@ -11,47 +11,14 @@ namespace Frontend
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private int _ID;
-        public int ID
-        {
-            get { return _ID; }
-            set
-            {
-                if (_ID != value)
-                {
-                    _ID = value;
-                    OnPropertyChanged(nameof(ID));
-                }
-            }
-        }
-
-        private string _Name;
-        public string Name
-        {
-            get { return _Name; }
-            set
-            {
-                if (_Name != value)
-                {
-                    _Name = value;
-                    OnPropertyChanged(nameof(Name));
-                }
-            }
-        }
-
-        private double _value;
-        public double value
-        {
-            get { return _value; }
-            set
-            {
-                if (_value != value)
-                {
-                    _value = value;
-                    OnPropertyChanged(nameof(value));
-                }
-            }
-        }
+        #region //ClassVariables
+        private string name;
+        private int iD;
+        private double val;
+        public int ID { get { return iD; } set { if (iD != value) { iD = value; OnPropertyChanged(nameof(ID)); } } }
+        public string Name { get { return name; } set { if (name != value) { name = value; OnPropertyChanged(nameof(Name)); } } }
+        public double Val { get { return val; } set { if (val != value) {val = value; OnPropertyChanged(nameof(value)); } } }
+        #endregion
 
         protected virtual void OnPropertyChanged(string propertyName)
         {

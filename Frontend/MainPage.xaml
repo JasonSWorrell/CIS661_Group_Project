@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Frontend.MainPage"
              
@@ -7,7 +8,7 @@
 
     <ContentPage.MenuBarItems>
         <MenuBarItem Text="File">
-            
+
             <MenuFlyoutItem Text="Open"
                             Command="{Binding OpenCommand}" />
             <MenuFlyoutItem Text="Save"
@@ -27,7 +28,7 @@
                                 Command="{Binding LightModeCommand}" />
             </MenuFlyoutSubItem>
         </MenuBarItem>
-           
+
         <MenuBarItem Text="Program">
             <MenuFlyoutItem Text="Run"
                             Command="{Binding RunCommand}" />
@@ -53,7 +54,7 @@
                     HorizontalOptions="StartAndExpand"
                     VerticalOptions="StartAndExpand">
                 <Label FontSize="22">Program</Label>
-                
+
                 <Editor x:Name="Program"
                         MinimumWidthRequest="250"
                         MinimumHeightRequest="500"
