@@ -40,11 +40,7 @@ xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
         <ToolbarItem Text="Import Program"
                  IconImageSource="add.png" />
     </ContentPage.ToolbarItems>
-
-
-
     <ScrollView>
-
         <FlexLayout Direction="Row"
             AlignItems="Stretch"
             JustifyContent="Start">
@@ -114,12 +110,6 @@ xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
                     Clicked="onRun"
                  />
             </VerticalStackLayout>
-
         </FlexLayout>
-
-
     </ScrollView>
-
-
-
 </ContentPage>

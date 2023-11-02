@@ -15,6 +15,7 @@ namespace Frontend
         private string name;
         private int iD;
         private double val;
+
         public int ID { get { return iD; } set { if (iD != value) { iD = value; OnPropertyChanged(nameof(ID)); } } }
         public string Name { get { return name; } set { if (name != value) { name = value; OnPropertyChanged(nameof(Name)); } } }
         public double Val { get { return val; } set { if (val != value) {val = value; OnPropertyChanged(nameof(value)); } } }

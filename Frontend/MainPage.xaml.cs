@@ -14,10 +14,10 @@ namespace Frontend
         string[] stringInstruction;
         int[] binaryInstruction;
 
-        public List<memBank> memoryBank { get; set; }
-        public List<Register> registerBank { get; set; }
+        public List<VisualMemBank> memoryBank { get; set; }
+        public List<VisualRegisters> registerBank { get; set; }
 
-        public ObservableCollection<Register> DataItems { get; set; }
+        public ObservableCollection<VisualRegisters> DataItems { get; set; }
         //public List<Register> DataItems { get; set; }
 
         public class DataItem
@@ -29,8 +29,8 @@ namespace Frontend
         public MainPage()
         {
             // var memBank = this.memoryBank; //memBank.Clear();
-            registerBank = Register.initRegisters();
-            DataItems = new ObservableCollection<Register>(registerBank);
+            registerBank = VisualRegisters.initRegisters();
+            DataItems = new ObservableCollection<VisualRegisters>(registerBank);
 
           //  var registers = this.registerBank; // current registers and their initial values
            // dataGridView4.DataSource = memBank;
@@ -83,9 +83,9 @@ namespace Frontend
                             int dest = binaryInstruction[1];
                             int r1 = binaryInstruction[2];
                             int r2 = binaryInstruction[3];
-                            Register Item1 = DataItems[dest];
-                            Register Item2 = DataItems[r1];
-                            Register Item3 = DataItems[r2];
+                            VisualRegisters Item1 = DataItems[dest];
+                            VisualRegisters Item2 = DataItems[r1];
+                            VisualRegisters Item3 = DataItems[r2];
 
 
 

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Frontend
 {
-
     public class Register
     {
         #region //ClassVariables
@@ -42,24 +41,11 @@ namespace Frontend
             }
         }
         #endregion
-
         public Register(int _id, string _name, int _value) 
         {
             ID = _id;
             Name = _name;
             Val = _value;
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        
-        
-
-        
-        
-
-        
-        
-
-        
+        }    
     }
 }
