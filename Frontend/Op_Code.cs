@@ -3,10 +3,29 @@
     public class Op_Code
     {
         #region //ClassVariables
-        static Register SZERO, SSP, ST0, ST1, ST2, ST3, SS0, SS1, SS2, SS3, SV, SA0, SA1, SA2, SRA, SK, SPC;
+        
+        private static VisualRegisters sZERO, sSP, sT0, sT1, sT2, sT3, sS0, sS1, sS2, sS3, sV, sA0, sA1, sA2, sRA, sK, sPC;
+        public static VisualRegisters SZERO { get; set; }
+        public static VisualRegisters SSP { get; set; }
+        public static VisualRegisters ST0 { get; set; }
+        public static VisualRegisters ST1 { get; set; }
+        public static VisualRegisters ST2 { get; set; }
+        public static VisualRegisters ST3 { get; set; }
+        public static VisualRegisters SS0 { get; set; }
+        public static VisualRegisters SS1 { get; set; }
+        public static VisualRegisters SS2 { get; set; }
+        public  static VisualRegisters SS3 { get; set; }
+        public static VisualRegisters SV { get; set; }
+        public static VisualRegisters SA0 { get; set; }
+        public static VisualRegisters SA1 { get; set; }
+        public static VisualRegisters SA2 { get; set; }
+        public static VisualRegisters SRA { get; set; }
+        public static VisualRegisters SK { get; set; }
+        public static VisualRegisters SPC { get; set; }
         private string[] Op_Code_List = new string[13] { "loadw", "storew", "sll", "slt", "isequal", "biz", "add", "sub", "addi", "jal", "jr", "and", "or" };
         private string[] Commands = new string[11] { "sll", "slt", "isequal", "biz", "add", "sub", "addi", "jal", "jr", "and", "or" };
-        readonly List<Register> Register_List = new List<Register> { SZERO, SSP, ST0, ST1, ST2, ST3, SS0, SS1, SS2, SS3, SV, SA0, SA1, SA2, SRA, SK, SPC };
+        private List<VisualRegisters> register_List;
+        public List<VisualRegisters> Register_List { get { return register_List; } }
         // Private temp Variables
         private string stemp1;
         private string stemp2;
@@ -22,6 +41,8 @@
         private string[] stack;
         private string[] Label_Locations = new string[200];
         #endregion
+       
+
 
         public Op_Code()
         {
@@ -40,25 +61,26 @@
             // Conversions done in the push and pull functions
             string[] stack = new string[100];
 
-            SZERO = new Register(0, "zero", 0);
-            SSP = new Register(1, "sp", 200);
-            ST0 = new Register(2, "t0", 0);
-            ST1 = new Register(3, "t1", 0);
-            ST2 = new Register(4, "t2", 0);
-            ST3 = new Register(5, "t3", 0);
-            SS0 = new Register(6, "s0", 0);
-            SS1 = new Register(7, "s1", 0);
-            SS2 = new Register(8, "s2", 0);
-            SS3 = new Register(9, "s3", 0);
-            SV = new Register(10, "v", 0);
-            SA0 = new Register(11, "a0", 0);
-            SA1 = new Register(12, "a1", 0);
-            SA2 = new Register(13, "a2", 0);
-            SRA = new Register(14, "ra", 0);
-            SK = new Register(15, "k", 0);
+            sZERO = new VisualRegisters(0, "zero", 0);
+            sSP = new VisualRegisters(1, "sp", 200);
+            sT0 = new VisualRegisters(2, "t0", 0);
+            sT1 = new VisualRegisters(3, "t1", 0);
+            sT2 = new VisualRegisters(4, "t2", 0);
+            sT3 = new VisualRegisters(5, "t3", 0);
+            sS0 = new VisualRegisters(6, "s0", 0);
+            sS1 = new VisualRegisters(7, "s1", 0);
+            sS2 = new VisualRegisters(8, "s2", 0);
+            sS3 = new VisualRegisters(9, "s3", 0);
+            sV = new VisualRegisters(10, "v", 0);
+            sA0 = new VisualRegisters(11, "a0", 0);
+            sA1 = new VisualRegisters(12, "a1", 0);
+            sA2 = new VisualRegisters(13, "a2", 0);
+            sRA = new VisualRegisters(14, "ra", 0);
+            sK = new VisualRegisters(15, "k", 0);
 
-            SPC = new Register(16, "pc", 0);
-        }
+            sPC = new VisualRegisters(16, "pc", 0);
+            register_List = new List<VisualRegisters> { SZERO, SSP, ST0, ST1, ST2, ST3, SS0, SS1, SS2, SS3, SV, SA0, SA1, SA2, SRA, SK, SPC };
+    }
         private bool Is_Valid_Op_Code(string Op_Code)
         {
             int itr = 0;
@@ -94,9 +116,9 @@
             stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp1);
             StoreBinString2Reg(SPC, stemp1);
         }
-        private Register GetReg(string register)
+        private VisualRegisters GetReg(string register)
         {
-            foreach (Register reg in Register_List)
+            foreach (VisualRegisters reg in Register_List)
             {
                 if (reg.Name == register)
                 {
@@ -106,9 +128,9 @@
             return null;
         }
         // Add the word Decimal after int
-        private int Get_RegVal_IfValid(Register register)
+        private int Get_RegVal_IfValid(VisualRegisters register)
         {
-            foreach (Register reg in Register_List)
+            foreach (VisualRegisters reg in Register_List)
             {
                 if (reg.Name == register.Name)
                 {
@@ -117,10 +139,10 @@
             }
             return -69;
         }
-        private uint Get_The_Binary_Int_Value_Of_Register_X(Register register)
+        private uint Get_The_Binary_Int_Value_Of_Register_X(VisualRegisters register)
         {
             {
-                foreach (Register reg in Register_List)
+                foreach (VisualRegisters reg in Register_List)
                 {
                     if (reg.Name == register.Name)
                     {
@@ -159,9 +181,9 @@
             return_value = string.Format(s, ibinary);
             return return_value;
         }
-        private void StoreBinString2Reg(Register register, string reg_value)
+        private void StoreBinString2Reg(VisualRegisters register, string reg_value)
         {
-            foreach (Register reg in Register_List)
+            foreach (VisualRegisters reg in Register_List)
             {
                 if (reg.Name == register.Name || reg.Name == "0")
                 {
@@ -184,7 +206,7 @@
         #region //Operators
         private void SLL(string[] Cmds)
         {
-            Register reg = GetReg(Cmds[1]);
+            VisualRegisters reg = GetReg(Cmds[1]);
             // Pull uint value and int value
             utemp1 = Get_The_Binary_Int_Value_Of_Register_X(reg);
             itemp2 = int.Parse(Cmds[2]);
@@ -198,9 +220,9 @@
         }
         private void SLT(string[] Cmds)
         {
-            Register reg1 = GetReg(Cmds[1]);
-            Register reg2 = GetReg(Cmds[2]);
-            Register reg3 = GetReg(Cmds[3]);
+            VisualRegisters reg1 = GetReg(Cmds[1]);
+            VisualRegisters reg2 = GetReg(Cmds[2]);
+            VisualRegisters reg3 = GetReg(Cmds[3]);
             // Pull int values
             int itemp1 = Get_RegVal_IfValid(reg2);
             itemp2 = Get_RegVal_IfValid(reg3);
@@ -220,9 +242,9 @@
         }
         private void ISEQUAL(string[] Cmds)
         {
-            Register reg1 = GetReg(Cmds[1]);
-            Register reg2 = GetReg(Cmds[2]);
-            Register reg3 = GetReg(Cmds[3]);
+            VisualRegisters reg1 = GetReg(Cmds[1]);
+            VisualRegisters reg2 = GetReg(Cmds[2]);
+            VisualRegisters reg3 = GetReg(Cmds[3]);
             // Pull int values
             itemp1 = Get_RegVal_IfValid(reg2);
             itemp2 = Get_RegVal_IfValid(reg3);
@@ -242,7 +264,7 @@
         }
         private void BIZ(string[] Cmds, int Number_Of_Commands)
         {
-            Register reg1 = GetReg(Cmds[1]);
+            VisualRegisters reg1 = GetReg(Cmds[1]);
             // Pull int values
             itemp1 = Get_RegVal_IfValid(reg1);
             itemp2 = 0;
@@ -284,9 +306,9 @@
         }
         private void ADD(string[] Cmds)
         {
-            Register reg1 = GetReg(Cmds[1]);
-            Register reg2 = GetReg(Cmds[2]);
-            Register reg3 = GetReg(Cmds[3]);
+            VisualRegisters reg1 = GetReg(Cmds[1]);
+            VisualRegisters reg2 = GetReg(Cmds[2]);
+            VisualRegisters reg3 = GetReg(Cmds[3]);
             // Pull int values
             itemp1 = Get_RegVal_IfValid(reg2);
             itemp2 = Get_RegVal_IfValid(reg3);
@@ -299,9 +321,9 @@
         }
         private void SUB(string[] Cmds)
         {
-            Register reg1 = GetReg(Cmds[1]);
-            Register reg2 = GetReg(Cmds[2]);
-            Register reg3 = GetReg(Cmds[3]);
+            VisualRegisters reg1 = GetReg(Cmds[1]);
+            VisualRegisters reg2 = GetReg(Cmds[2]);
+            VisualRegisters reg3 = GetReg(Cmds[3]);
             // Pull int values
             itemp1 = Get_RegVal_IfValid(reg2);
             itemp2 = Get_RegVal_IfValid(reg3);
@@ -314,8 +336,8 @@
         }
         private void ADDI(string[] Cmds)
         {
-            Register reg1 = GetReg(Cmds[1]);
-            Register reg3 = GetReg(Cmds[3]);
+            VisualRegisters reg1 = GetReg(Cmds[1]);
+            VisualRegisters reg3 = GetReg(Cmds[3]);
             // Pull int values
             itemp1 = Get_RegVal_IfValid(reg1);
             itemp2 = int.Parse(Cmds[2]);
@@ -328,7 +350,7 @@
         }
         private void JAL(string[] Cmds, int Number_Of_Commands)
         {
-            Register register = GetReg(Cmds[1]);
+            VisualRegisters register = GetReg(Cmds[1]);
             // Set itemp2 to 0 so 
             itemp2 = 0;
             // Store the next PC number into the ra register
@@ -372,7 +394,7 @@
         }
         private void JR(string[] Cmds)
         {
-            Register reg = GetReg(Cmds[1]);
+            VisualRegisters reg = GetReg(Cmds[1]);
             // Pull int values
             itemp1 = Get_RegVal_IfValid(reg);
             // Change the PC to the given register
@@ -381,9 +403,9 @@
         }
         private void AND(string[] Cmds)
         {
-            Register reg1 = GetReg(Cmds[1]);
-            Register reg2 = GetReg(Cmds[2]);
-            Register reg3 = GetReg(Cmds[3]);
+            VisualRegisters reg1 = GetReg(Cmds[1]);
+            VisualRegisters reg2 = GetReg(Cmds[2]);
+            VisualRegisters reg3 = GetReg(Cmds[3]);
             // Pull uint value and int value
             utemp1 = Get_The_Binary_Int_Value_Of_Register_X(reg2);
             utemp2 = Get_The_Binary_Int_Value_Of_Register_X(reg3);
@@ -397,9 +419,9 @@
         }
         private void OR(string[] Cmds)
         {
-            Register reg1 = GetReg(Cmds[1]);
-            Register reg2 = GetReg(Cmds[2]);
-            Register reg3 = GetReg(Cmds[3]);
+            VisualRegisters reg1 = GetReg(Cmds[1]);
+            VisualRegisters reg2 = GetReg(Cmds[2]);
+            VisualRegisters reg3 = GetReg(Cmds[3]);
             // Pull uint value and int value
             utemp1 = Get_The_Binary_Int_Value_Of_Register_X(reg2);
             utemp2 = Get_The_Binary_Int_Value_Of_Register_X(reg3);

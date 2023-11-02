@@ -11,12 +11,13 @@ namespace Frontend
 {
     public class FileHandler
     {
-        string[] InstructionList;
+        private string[] instructionList;
         private string cacheDir;
         private string filePath;
 
         public string CacheDir { get; }
         public string FilePath { get; }
+        public string[] InstructionList {  get { return instructionList; } }    
         public FileHandler() 
         {
             cacheDir = FileSystem.Current.CacheDirectory;
@@ -36,17 +37,18 @@ namespace Frontend
             string instruction;
             StreamReader reader;
             var file = await FilePicker.Default.PickAsync();
-            if (file == null)
+            if (file != null)
             {
                 if (file.FileName.EndsWith("txt", StringComparison.OrdinalIgnoreCase))
                 {
                     file.OpenReadAsync().Wait();    
                     reader = new StreamReader(file.FullPath);
-                    instruction = "Start";
+                    instruction = reader.ReadLine();
+                    instructionList[0] = reader.ReadLine();
                     while (instruction != null)
                     {
                         instruction = reader.ReadLine();
-                        InstructionList.Append(instruction);
+                        instructionList.Append(instruction);
                     }
                     reader.Close();
                 }

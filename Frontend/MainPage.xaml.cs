@@ -1,5 +1,4 @@
-﻿
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace Frontend
 {
@@ -30,35 +29,36 @@ namespace Frontend
 
         public MainPage()
         {
-            // var memBank = this.memoryBank; //memBank.Clear();
-            registerBank = VisualRegisters.initRegisters();
+            //var memBank = this.memoryBank; 
+            //memBank.Clear();
+            Program_Instance = new Op_Code();
+            registerBank = VisualRegisters.initRegisters(Program_Instance) ;
             DataItems = new ObservableCollection<VisualRegisters>(registerBank);
             FileMan = new FileHandler();
-            Program_Instance = new Op_Code();
 
-          //  var registers = this.registerBank; // current registers and their initial values
-           // dataGridView4.DataSource = memBank;
-            //DataItems.DataSource = registers;
+           var registers = this.registerBank; // current registers and their initial values
+           //dataGridView4.DataSource = memBank;
+           //DataItems.DataSource = registers;
 
             InitializeComponent();
             // Sample data for testing
-           // DataItems = registers;
+            //DataItems = registers;
             BindingContext = this; // Set the BindingContext
         }
 
         #region //MENU
         // File Commands
         private void OpenCommand(object sender, EventArgs e) 
-        {
+        {            
             FileMan.OpenFile();
         }
         private void NewFileCommand(object sender, EventArgs e) 
         {
-            
+         
         }
-        private void ExitCommand(object sender, EventArgs e) 
+        public void ExitCommand(object sender, EventArgs e) 
         {
-            
+            Application.Current.Quit();
         }
         private void SaveCommand(object sender, EventArgs e) 
         {
@@ -71,7 +71,7 @@ namespace Frontend
         // Appearance Editors
         private void DarkMode(object sender, EventArgs e) 
         {
-        
+            
         }
         private void LightMode(object sender, EventArgs e) 
         {
@@ -81,6 +81,7 @@ namespace Frontend
         private void RunCommand(object sender, EventArgs e) 
         {
             Program_Instance.Perform_The_Op_Code(Instructions, Instructions.Count() - 1);
+            Instructions = FileMan.InstructionList;
         } 
         private void DebugCommand(object sender, EventArgs e) 
         {
