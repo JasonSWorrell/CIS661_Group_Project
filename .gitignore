@@ -364,3 +364,4 @@ FodyWeavers.xsd
 
 #EmanSampleApp Directory
 EmanSampleApp/*
+/Frontend/MainPage.xaml
