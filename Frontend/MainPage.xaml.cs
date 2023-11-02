@@ -16,13 +16,15 @@ namespace Frontend
 
         public List<VisualMemBank> memoryBank { get; set; }
         public List<VisualRegisters> registerBank { get; set; }
-
+        public string[] Instructions { get; set; }
         public ObservableCollection<VisualRegisters> DataItems { get; set; }
         //public List<Register> DataItems { get; set; }
+        public Op_Code Program_Instance;
+        public FileHandler FileMan;
 
         public class DataItem
         {
-  
+            
         }
         #endregion
 
@@ -31,6 +33,8 @@ namespace Frontend
             // var memBank = this.memoryBank; //memBank.Clear();
             registerBank = VisualRegisters.initRegisters();
             DataItems = new ObservableCollection<VisualRegisters>(registerBank);
+            FileMan = new FileHandler();
+            Program_Instance = new Op_Code();
 
           //  var registers = this.registerBank; // current registers and their initial values
            // dataGridView4.DataSource = memBank;
@@ -44,28 +48,60 @@ namespace Frontend
 
         #region //MENU
         // File Commands
-        private void OpenCommand(object sender, EventArgs e) { }
-        private void NewFileCommand(object sender, EventArgs e) { }
-        private void ExitCommand(object sender, EventArgs e) { }
-        private void SaveCommand(object sender, EventArgs e) { }
-        private void EditCommand(object sender, EventArgs e) { }
+        private void OpenCommand(object sender, EventArgs e) 
+        {
+            FileMan.OpenFile();
+        }
+        private void NewFileCommand(object sender, EventArgs e) 
+        {
+            
+        }
+        private void ExitCommand(object sender, EventArgs e) 
+        {
+            
+        }
+        private void SaveCommand(object sender, EventArgs e) 
+        {
+            FileMan.SaveFile(Instructions);
+        }
+        private void EditCommand(object sender, EventArgs e) 
+        {
+            
+        }
         // Appearance Editors
-        private void DarkMode(object sender, EventArgs e) { }
-        private void LightMode(object sender, EventArgs e) { }  
+        private void DarkMode(object sender, EventArgs e) 
+        {
+        
+        }
+        private void LightMode(object sender, EventArgs e) 
+        {
+        
+        }  
         // Debug Controls
         private void RunCommand(object sender, EventArgs e) 
         {
-            int i = 0;
-            i++;
+            Program_Instance.Perform_The_Op_Code(Instructions, Instructions.Count() - 1);
         } 
-        private void DebugCommand(object sender, EventArgs e) { }
-        private void PauseCommand(object sender, EventArgs e) { }
+        private void DebugCommand(object sender, EventArgs e) 
+        {
+        
+        }
+        private void PauseCommand(object sender, EventArgs e) 
+        {
+        
+        }
         #endregion
 
         #region //Text
         //Text Fillers
-        private void OnEditorTextChanged(object sender, EventArgs e) { }
-        private void OnEditorCompleted(object sender, EventArgs e) { }
+        private void OnEditorTextChanged(object sender, EventArgs e) 
+        {
+        
+        }
+        private void OnEditorCompleted(object sender, EventArgs e) 
+        {
+        
+        }
         #endregion
     }
 }

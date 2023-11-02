@@ -59,7 +59,7 @@
 
             SPC = new Register(16, "pc", 0);
         }
-        public bool Is_Valid_Op_Code(string Op_Code)
+        private bool Is_Valid_Op_Code(string Op_Code)
         {
             int itr = 0;
             while (itr < 13)
@@ -72,7 +72,7 @@
             }
             return false;
         }
-        public void Initialize_Label_Locations(string[] Labels, string[] Commands)
+        private void Initialize_Label_Locations(string[] Labels, string[] Commands)
         {
             for (int i = 0; i < Commands.Length; i++)
             {
@@ -87,14 +87,14 @@
                 }
             }
         }
-        public void Itterate_PC(int itr)
+        private void Itterate_PC(int itr)
         {
             itemp1 = SPC.Val;
             itemp1 += itr;
             stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp1);
             StoreBinString2Reg(SPC, stemp1);
         }
-        public Register GetReg(string register)
+        private Register GetReg(string register)
         {
             foreach (Register reg in Register_List)
             {
@@ -106,7 +106,7 @@
             return null;
         }
         // Add the word Decimal after int
-        public int Get_RegVal_IfValid(Register register)
+        private int Get_RegVal_IfValid(Register register)
         {
             foreach (Register reg in Register_List)
             {
@@ -117,7 +117,7 @@
             }
             return -69;
         }
-        public uint Get_The_Binary_Int_Value_Of_Register_X(Register register)
+        private uint Get_The_Binary_Int_Value_Of_Register_X(Register register)
         {
             {
                 foreach (Register reg in Register_List)
@@ -131,7 +131,7 @@
             }
         }
         //remove the word Register from this function and add decimal word
-        public string Get_The_Binary_String_Value_Of_An_Int_Numer(int Register_int)
+        private string Get_The_Binary_String_Value_Of_An_Int_Numer(int Register_int)
         {
             string sbinary = Convert.ToString(Register_int, 2);
             long ibinary = long.Parse(sbinary);
@@ -159,7 +159,7 @@
             return_value = string.Format(s, ibinary);
             return return_value;
         }
-        public void StoreBinString2Reg(Register register, string reg_value)
+        private void StoreBinString2Reg(Register register, string reg_value)
         {
             foreach (Register reg in Register_List)
             {
@@ -169,19 +169,20 @@
                 }
             }
         }
-        public void Push_To_Stack(int value, int offset, int index)   // Pushes a Value to the Stack and Then Increments the Stack Pointer
+        private void Push_To_Stack(int value, int offset, int index)   // Pushes a Value to the Stack and Then Increments the Stack Pointer
         {
             string binary_value = Get_The_Binary_String_Value_Of_An_Int_Numer(value);   // convert value to be stored into a binary string 
             index = ((index + offset) / 2) - 1;  // get the index of the stack array to store binary string
             stack[index] = binary_value;
         }
-        public int Pull_From_Stack(int offset, int index)
+        private int Pull_From_Stack(int offset, int index)
         {
             index = ((index + offset) / 2) - 1;  // get the index of the stack
             int value = Convert.ToInt32(stack[index], 2);
             return value;
         }
-        void SLL(string[] Cmds)
+        #region //Operators
+        private void SLL(string[] Cmds)
         {
             Register reg = GetReg(Cmds[1]);
             // Pull uint value and int value
@@ -195,7 +196,7 @@
             StoreBinString2Reg(reg, stemp1);
             Itterate_PC(1);
         }
-        void SLT(string[] Cmds)
+        private void SLT(string[] Cmds)
         {
             Register reg1 = GetReg(Cmds[1]);
             Register reg2 = GetReg(Cmds[2]);
@@ -217,7 +218,7 @@
             StoreBinString2Reg(reg1, stemp1);
             Itterate_PC(1);
         }
-        void ISEQUAL(string[] Cmds)
+        private void ISEQUAL(string[] Cmds)
         {
             Register reg1 = GetReg(Cmds[1]);
             Register reg2 = GetReg(Cmds[2]);
@@ -239,7 +240,7 @@
             StoreBinString2Reg(reg1, stemp1);
             Itterate_PC(1);
         }
-        void BIZ(string[] Cmds, int Number_Of_Commands)
+        private void BIZ(string[] Cmds, int Number_Of_Commands)
         {
             Register reg1 = GetReg(Cmds[1]);
             // Pull int values
@@ -281,7 +282,7 @@
                 Itterate_PC(1);
             }
         }
-        void ADD(string[] Cmds)
+        private void ADD(string[] Cmds)
         {
             Register reg1 = GetReg(Cmds[1]);
             Register reg2 = GetReg(Cmds[2]);
@@ -296,7 +297,7 @@
             StoreBinString2Reg(reg1, stemp1);
             Itterate_PC(1);
         }
-        void SUB(string[] Cmds)
+        private void SUB(string[] Cmds)
         {
             Register reg1 = GetReg(Cmds[1]);
             Register reg2 = GetReg(Cmds[2]);
@@ -311,7 +312,7 @@
             StoreBinString2Reg(reg1, stemp1);
             Itterate_PC(1);
         }
-        void ADDI(string[] Cmds)
+        private void ADDI(string[] Cmds)
         {
             Register reg1 = GetReg(Cmds[1]);
             Register reg3 = GetReg(Cmds[3]);
@@ -325,7 +326,7 @@
             StoreBinString2Reg(reg1, stemp1);
             Itterate_PC(1);
         }
-        void JAL(string[] Cmds, int Number_Of_Commands)
+        private void JAL(string[] Cmds, int Number_Of_Commands)
         {
             Register register = GetReg(Cmds[1]);
             // Set itemp2 to 0 so 
@@ -369,7 +370,7 @@
             //Console.WriteLine(sa0);
 
         }
-        void JR(string[] Cmds)
+        private void JR(string[] Cmds)
         {
             Register reg = GetReg(Cmds[1]);
             // Pull int values
@@ -378,7 +379,7 @@
             stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp1);
             StoreBinString2Reg(SPC, stemp1);
         }
-        void AND(string[] Cmds)
+        private void AND(string[] Cmds)
         {
             Register reg1 = GetReg(Cmds[1]);
             Register reg2 = GetReg(Cmds[2]);
@@ -394,7 +395,7 @@
             StoreBinString2Reg(reg1, stemp1);
             Itterate_PC(1);
         }
-        void OR(string[] Cmds)
+        private void OR(string[] Cmds)
         {
             Register reg1 = GetReg(Cmds[1]);
             Register reg2 = GetReg(Cmds[2]);
@@ -410,6 +411,7 @@
             StoreBinString2Reg(reg1, stemp1);
             Itterate_PC(1);
         }
+        #endregion
         public void Perform_The_Op_Code(string[] Parsed_String, int Number_Of_Commands)
         {
            switch (Parsed_String[0]) 

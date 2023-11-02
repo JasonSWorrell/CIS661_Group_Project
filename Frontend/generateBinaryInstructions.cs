@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Frontend
 
 {
-    public class generateBinaryInstructions
+    public class GenerateBinaryInstructions
     {
         internal static int[] GetBinary(string[] rawInstruct )
         {

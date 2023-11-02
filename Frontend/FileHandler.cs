@@ -9,18 +9,20 @@ using System.Threading.Tasks;
 
 namespace Frontend
 {
-    internal class FileHandler
+    public class FileHandler
     {
-        List<string> InstructionList;
-        string cacheDir;
-        string filePath;
+        string[] InstructionList;
+        private string cacheDir;
+        private string filePath;
+
+        public string CacheDir { get; }
+        public string FilePath { get; }
         public FileHandler() 
         {
             cacheDir = FileSystem.Current.CacheDirectory;
-            InstructionList = new List<string>();
             filePath = "";
         }
-        public void SaveFile(List<string> Instructions) 
+        public void SaveFile(string[] Instructions) 
         {
             StreamWriter writer = new StreamWriter(filePath);
             foreach(string Instruction in Instructions) 
@@ -44,7 +46,7 @@ namespace Frontend
                     while (instruction != null)
                     {
                         instruction = reader.ReadLine();
-                        InstructionList.Add(instruction);
+                        InstructionList.Append(instruction);
                     }
                     reader.Close();
                 }
