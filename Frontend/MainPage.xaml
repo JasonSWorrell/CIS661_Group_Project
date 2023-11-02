@@ -83,20 +83,19 @@ xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Padding="10">
-                                <!-- Define columns -->
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <!-- Add other columns as needed -->
-                                </Grid.ColumnDefinitions>
-
-                                <!-- Bind data -->
-                                <Label Text="{Binding ID}" Grid.Column="0" />
+                            <Grid>
+                            <!-- Define columns -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
+                            <!-- Add other columns as needed -->
+                            </Grid.ColumnDefinitions>
+                            <!-- Bind data -->
+                                <Label Text="{Binding ID}" Grid.Column="0"/>
                                 <Label Text="{Binding Name}" Grid.Column="1" />
-                                <Label Text="{Binding value}" Grid.Column="2" />
-                                <!-- Add other column data as needed -->
+                                <Label Text="{Binding Val}" Grid.Column="2" />
+                            <!-- Add other column data as needed -->
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
