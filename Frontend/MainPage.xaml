@@ -107,7 +107,7 @@ xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
                     Grid.Row="1"
                     Grid.ColumnSpan="2"
                     Text="RUN"
-                    Clicked="onRun"
+                    Clicked="RunCommand"
                  />
             </VerticalStackLayout>
         </FlexLayout>
