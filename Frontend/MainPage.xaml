@@ -1,115 +1,75 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Frontend.MainPage"
-             
-              >
-
+<ContentPage
+    x:Class="Frontend.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui">
     <ContentPage.MenuBarItems>
         <MenuBarItem Text="File">
-
-            <MenuFlyoutItem Text="Open"
-                            Command="{Binding OpenCommand}" />
-            <MenuFlyoutItem Text="Save"
-                            Command="{Binding SaveCommand}" />
-            <MenuFlyoutItem Text="Exit"
-                            Command="{Binding ExitCommand}" />
+            <MenuFlyoutItem Command="{Binding OpenCommand}" Text="Open" />
+            <MenuFlyoutItem Command="{Binding SaveCommand}" Text="Save" />
+            <MenuFlyoutItem Command="{Binding ExitCommand}" Text="Exit" />
         </MenuBarItem>
         <MenuBarItem Text="Edit">
-            <MenuFlyoutItem Text="Edit"
-                            Command="{Binding EditCommand}"/>
+            <MenuFlyoutItem Command="{Binding EditCommand}" Text="Edit" />
         </MenuBarItem>
         <MenuBarItem Text="Settings">
             <MenuFlyoutSubItem Text="Display Modes">
-                <MenuFlyoutItem Text="DarkMode"
-                                Command="{Binding DarkModeCommand}"/>
-                <MenuFlyoutItem Text="LightMode"
-                                Command="{Binding LightModeCommand}" />
+                <MenuFlyoutItem Command="{Binding DarkModeCommand}" Text="DarkMode" />
+                <MenuFlyoutItem Command="{Binding LightModeCommand}" Text="LightMode" />
             </MenuFlyoutSubItem>
         </MenuBarItem>
-
         <MenuBarItem Text="Program">
-            <MenuFlyoutItem Text="Run"
-                            Command="{Binding RunCommand}" />
-            <MenuFlyoutItem Text="Debug"
-                            Command="{Binding DebugCommand}" />
+            <MenuFlyoutItem Command="{Binding RunCommand}" Text="Run" />
+            <MenuFlyoutItem Command="{Binding DebugCommand}" Text="Debug" />
         </MenuBarItem>
     </ContentPage.MenuBarItems>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Import Program"
-                 IconImageSource="add.png" />
+        <ToolbarItem IconImageSource="add.png" Text="Import Program" />
     </ContentPage.ToolbarItems>
     <ScrollView>
-        <FlexLayout Direction="Row"
-            AlignItems="Stretch"
-            JustifyContent="Start">
-            <VerticalStackLayout
-                    Spacing="1"
-                    Padding="10"
-                    HorizontalOptions="StartAndExpand"
-                    VerticalOptions="StartAndExpand">
-                <Label FontSize="22">Program</Label>
-
-                <Editor x:Name="Program"
-                        MinimumWidthRequest="250"
-                        MinimumHeightRequest="500"
-                        TextChanged="OnEditorTextChanged"
-                        Completed="OnEditorCompleted" 
-                        />
-                
-            </VerticalStackLayout>
-            <VerticalStackLayout
-                    Spacing="1"
-                    Padding="10"
-                    HorizontalOptions="StartAndExpand"
-                    VerticalOptions="StartAndExpand">
-                <Label FontSize="22">Binary Translation</Label>
-                <Editor x:Name="BinaryTranslation"
-                        MinimumWidthRequest="150"
-                        MinimumHeightRequest="500"
-                        TextChanged="OnEditorTextChanged"
-                        Completed="OnEditorCompleted" />
-            </VerticalStackLayout>
-            <VerticalStackLayout>
-                <Label 
-                    FontSize="22"
-                    >
-                    REGISTER BANK
-                </Label>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="450*"/>
+                <ColumnDefinition Width="150*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75*"/>
+                <RowDefinition Height="25*"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <Editor
+                x:Name="Program"
+                Grid.Column="0"
+                Grid.Row="0"
+                Completed="OnEditorCompleted"
+                TextChanged="OnEditorTextChanged" />
+            <Editor
+                x:Name="Message"
+                Grid.Column="0"
+                Grid.Row="1"
+                Completed="OnEditorCompleted"
+                TextChanged="OnEditorTextChanged" />
+            <Button Text="Run" Grid.Column="0" Grid.Row="2"/>
+            <FlexLayout Grid.Column="1" Grid.RowSpan="2">
                 <CollectionView x:Name="DataGridCollectionView" ItemsSource="{Binding DataItems}">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" />
-                    </CollectionView.ItemsLayout>
+					
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Padding="10">
-                                <!-- Define columns -->
+                            <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
-                                    <!-- Add other columns as needed -->
                                 </Grid.ColumnDefinitions>
-
-                                <!-- Bind data -->
-                                <Label Text="{Binding ID}" Grid.Column="0" />
-                                <Label Text="{Binding Name}" Grid.Column="1" />
-                                <Label Text="{Binding value}" Grid.Column="2" />
-                                <!-- Add other column data as needed -->
+                                <Label Grid.Column="0" Text="{Binding ID}" />
+                                <Label Grid.Column="1" Text="{Binding Name}" />
+                                <Label Grid.Column="2" Text="{Binding Val}" />
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-            </VerticalStackLayout>
-            <VerticalStackLayout>
-                <Button 
-                    Grid.Row="1"
-                    Grid.ColumnSpan="2"
-                    Text="RUN"
-                    Clicked="RunCommand"
-                 />
-            </VerticalStackLayout>
-        </FlexLayout>
+            </FlexLayout>
+        </Grid>
     </ScrollView>
 </ContentPage>
