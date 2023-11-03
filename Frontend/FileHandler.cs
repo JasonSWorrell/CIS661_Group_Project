@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Frontend
 {
-    public class FileHandler
+    public class FileHandler : INotifyPropertyChanged
     {
-        private string[] instructionList;
+        private List<string> instructionList;
         private string cacheDir;
         private string filePath;
 
@@ -25,14 +25,14 @@ namespace Frontend
 
         public string CacheDir { get; }
         public string FilePath { get; }
-        public string[] InstructionList {  get { return instructionList; } }    
+        public List<string> InstructionList {  get { return instructionList; } }    
         public FileHandler() 
         {
-            instructionList = new string[] { };
-            cacheDir = FileSystem.Current.CacheDirectory;
+            instructionList = new List<string> { };
+            //cacheDir = FileSystem.Current.CacheDirectory;
             filePath = "";
         }
-        public void SaveFile(string[] Instructions) 
+        public void SaveFile(List<string> Instructions) 
         {
             StreamWriter writer = new StreamWriter(filePath);
             foreach(string Instruction in Instructions) 
@@ -48,21 +48,22 @@ namespace Frontend
             var file = await FilePicker.Default.PickAsync();
             if (file != null)
             {
+                
                 if (file.FileName.EndsWith("txt", StringComparison.OrdinalIgnoreCase))
                 {
-                        
-                    reader = new StreamReader(file.FullPath);
+                    filePath = file.FullPath;
+                    reader = new StreamReader(filePath);
                     instruction = "";
                     
                     while (instruction != null)
                     {
                         instruction = reader.ReadLine();
-                        instructionList.Append(instruction);
+                        instructionList.Add(instruction);
                     }
-                    reader.Close();
-                    
+                    reader.Close();                    
                 }
-            }            
+            }
+            //await DisplayAlert("Success", "File uploaded", "OK");
         }
         public List<string> initInstructions()
         {

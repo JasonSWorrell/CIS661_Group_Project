@@ -204,7 +204,7 @@
             return value;
         }
         #region //Operators
-        private void SLL(string[] Cmds)
+        private void SLL(List<string> Cmds)
         {
             VisualRegisters reg = GetReg(Cmds[1]);
             // Pull uint value and int value
@@ -218,7 +218,7 @@
             StoreBinString2Reg(reg, stemp1);
             Itterate_PC(1);
         }
-        private void SLT(string[] Cmds)
+        private void SLT(List<string> Cmds)
         {
             VisualRegisters reg1 = GetReg(Cmds[1]);
             VisualRegisters reg2 = GetReg(Cmds[2]);
@@ -240,7 +240,7 @@
             StoreBinString2Reg(reg1, stemp1);
             Itterate_PC(1);
         }
-        private void ISEQUAL(string[] Cmds)
+        private void ISEQUAL(List<string> Cmds)
         {
             VisualRegisters reg1 = GetReg(Cmds[1]);
             VisualRegisters reg2 = GetReg(Cmds[2]);
@@ -262,7 +262,7 @@
             StoreBinString2Reg(reg1, stemp1);
             Itterate_PC(1);
         }
-        private void BIZ(string[] Cmds, int Number_Of_Commands)
+        private void BIZ(List<string> Cmds, int Number_Of_Commands)
         {
             VisualRegisters reg1 = GetReg(Cmds[1]);
             // Pull int values
@@ -304,7 +304,7 @@
                 Itterate_PC(1);
             }
         }
-        private void ADD(string[] Cmds)
+        private void ADD(List<string> Cmds)
         {
             VisualRegisters reg1 = GetReg(Cmds[1]);
             VisualRegisters reg2 = GetReg(Cmds[2]);
@@ -319,7 +319,7 @@
             StoreBinString2Reg(reg1, stemp1);
             Itterate_PC(1);
         }
-        private void SUB(string[] Cmds)
+        private void SUB(List<string> Cmds)
         {
             VisualRegisters reg1 = GetReg(Cmds[1]);
             VisualRegisters reg2 = GetReg(Cmds[2]);
@@ -334,7 +334,7 @@
             StoreBinString2Reg(reg1, stemp1);
             Itterate_PC(1);
         }
-        private void ADDI(string[] Cmds)
+        private void ADDI(List<string> Cmds)
         {
             VisualRegisters reg1 = GetReg(Cmds[1]);
             VisualRegisters reg3 = GetReg(Cmds[3]);
@@ -348,7 +348,7 @@
             StoreBinString2Reg(reg1, stemp1);
             Itterate_PC(1);
         }
-        private void JAL(string[] Cmds, int Number_Of_Commands)
+        private void JAL(List<string> Cmds, int Number_Of_Commands)
         {
             VisualRegisters register = GetReg(Cmds[1]);
             // Set itemp2 to 0 so 
@@ -392,7 +392,7 @@
             //Console.WriteLine(sa0);
 
         }
-        private void JR(string[] Cmds)
+        private void JR(List<string> Cmds)
         {
             VisualRegisters reg = GetReg(Cmds[1]);
             // Pull int values
@@ -401,7 +401,7 @@
             stemp1 = Get_The_Binary_String_Value_Of_An_Int_Numer(itemp1);
             StoreBinString2Reg(SPC, stemp1);
         }
-        private void AND(string[] Cmds)
+        private void AND(List<string> Cmds)
         {
             VisualRegisters reg1 = GetReg(Cmds[1]);
             VisualRegisters reg2 = GetReg(Cmds[2]);
@@ -417,7 +417,7 @@
             StoreBinString2Reg(reg1, stemp1);
             Itterate_PC(1);
         }
-        private void OR(string[] Cmds)
+        private void OR(List<string> Cmds)
         {
             VisualRegisters reg1 = GetReg(Cmds[1]);
             VisualRegisters reg2 = GetReg(Cmds[2]);
@@ -434,7 +434,7 @@
             Itterate_PC(1);
         }
         #endregion
-        public void Perform_The_Op_Code(string[] Parsed_String, int Number_Of_Commands)
+        public void Perform_The_Op_Code(List<string> Parsed_String, int Number_Of_Commands)
         {
            switch (Parsed_String[0]) 
             {

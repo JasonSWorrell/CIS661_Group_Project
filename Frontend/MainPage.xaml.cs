@@ -16,7 +16,7 @@ namespace Frontend
         public List<VisualMemBank> memoryBank { get; set; }
         public List<VisualRegisters> registerBank { get; set; }
         public List<string> stringInstructions { get; set; }
-        public string[] Instructions { get; set; }
+        public List<string> Instructions { get; set; }
         public ObservableCollection<VisualRegisters> DataItems { get; set; }
         //public List<Register> DataItems { get; set; }
         public Op_Code Program_Instance;
@@ -39,11 +39,11 @@ namespace Frontend
             stringInstructions = FileMan.initInstructions();
             DataItems = new ObservableCollection<VisualRegisters>(registerBank);            
             InstructionItems = new ObservableCollection<string>(stringInstructions);
-           var registers = this.registerBank; // current registers and their initial values
-           //dataGridView4.DataSource = memBank;
-           //DataItems.DataSource = registers;
+            var registers = this.registerBank; // current registers and their initial values
+            //dataGridView4.DataSource = memBank;
+            //DataItems.DataSource = registers;
 
-            //InitializeComponent();
+            InitializeComponent();
             // Sample data for testing
             //DataItems = registers;
             BindingContext = this; // Set the BindingContext
@@ -68,6 +68,7 @@ namespace Frontend
             else
             {
                 FileMan.OpenFile();
+                
             }
         }
         private void NewFileCommand(object sender, EventArgs e) 
