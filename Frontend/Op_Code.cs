@@ -476,6 +476,13 @@
                     break;
             }
         }
-       
+        public List<VisualRegisters> initRegisters()
+        {
+            List<VisualRegisters> list = new List<VisualRegisters>();
+
+            list = Register_List;
+
+            return list;
+        }
     }
 }

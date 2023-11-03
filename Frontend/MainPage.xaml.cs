@@ -15,11 +15,13 @@ namespace Frontend
 
         public List<VisualMemBank> memoryBank { get; set; }
         public List<VisualRegisters> registerBank { get; set; }
+        public List<string> stringInstructions { get; set; }
         public string[] Instructions { get; set; }
         public ObservableCollection<VisualRegisters> DataItems { get; set; }
         //public List<Register> DataItems { get; set; }
         public Op_Code Program_Instance;
         public FileHandler FileMan;
+        public ObservableCollection<string> InstructionItems { get; set; }
 
         public class DataItem
         {
@@ -32,15 +34,16 @@ namespace Frontend
             //var memBank = this.memoryBank; 
             //memBank.Clear();
             Program_Instance = new Op_Code();
-            registerBank = VisualRegisters.initRegisters(Program_Instance) ;
-            DataItems = new ObservableCollection<VisualRegisters>(registerBank);
             FileMan = new FileHandler();
-
+            registerBank = Program_Instance.initRegisters() ;
+            stringInstructions = FileMan.initInstructions();
+            DataItems = new ObservableCollection<VisualRegisters>(registerBank);            
+            InstructionItems = new ObservableCollection<string>(stringInstructions);
            var registers = this.registerBank; // current registers and their initial values
            //dataGridView4.DataSource = memBank;
            //DataItems.DataSource = registers;
 
-            InitializeComponent();
+            //InitializeComponent();
             // Sample data for testing
             //DataItems = registers;
             BindingContext = this; // Set the BindingContext
@@ -49,8 +52,23 @@ namespace Frontend
         #region //MENU
         // File Commands
         private void OpenCommand(object sender, EventArgs e) 
-        {            
-            FileMan.OpenFile();
+        {
+            Instructions = null;
+            if(Instructions != null )
+            {
+                Instructions = FileMan.InstructionList;
+                if (Instructions != null)
+                {
+                    foreach (string line in Instructions)
+                    {
+                        InstructionItems.Add(line);
+                    }
+                }
+            }
+            else
+            {
+                FileMan.OpenFile();
+            }
         }
         private void NewFileCommand(object sender, EventArgs e) 
         {
@@ -62,7 +80,7 @@ namespace Frontend
         }
         private void SaveCommand(object sender, EventArgs e) 
         {
-            FileMan.SaveFile(Instructions);
+            FileMan.SaveFile(Instructions);            
         }
         private void EditCommand(object sender, EventArgs e) 
         {

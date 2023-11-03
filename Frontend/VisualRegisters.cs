@@ -32,13 +32,6 @@ namespace Frontend
             Val = _value;
         }
         public static string[] regCode = { "zero", "sp", "t0", "t1", "t2", "t3", "s0", "s1", "s2", "s3", "v", "a0", "a1", "a2", "ra", "ker" };
-        public static List<VisualRegisters> initRegisters(Op_Code op_Code) 
-        {
-            List<VisualRegisters> list = new List<VisualRegisters>();
-
-            list = op_Code.Register_List;
-           
-            return list;
-        }
+        
     }
 }
